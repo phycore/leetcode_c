@@ -1,6 +1,7 @@
 #include "json_common.h"
 #include "logging.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 static int32_t JSON_dispatch_value_type(struct json_value_s* json_value);
 static int32_t JSON_extract_elements(struct json_object_element_s* json_obj_element);
@@ -109,6 +110,62 @@ void JSON_print_type(void) {
     log_info("json_type_false  %d", json_type_false);
     log_info("json_type_null   %d", json_type_null);
     log_info("\n");
+}
+
+struct json_value_s* JSON_create_root(char* json_in_string, size_t str_length) {
+    struct json_value_s* json_root = NULL;
+
+    if (NULL == json_in_string || 0 == str_length) {
+        log_error("Input json_in_string is null or string length is wrong.");
+        goto EXIT;
+    }
+
+    size_t examine_length = strlen(json_in_string);
+    if (examine_length != str_length) {
+        log_warn("strlen(json_in_string) = %zd != str_length = %zd.", examine_length, str_length);
+    }
+
+    json_root = json_parse(json_in_string, str_length);
+    if (NULL == json_root) {
+        log_error("json_parse get root is fail.");
+        goto EXIT;
+    }
+
+    log_info("json_root_type is %zd.", json_root->type);
+    log_debug("Memory address of json_root = %p", json_root);
+
+EXIT:
+    return json_root;
+}
+
+int32_t JSON_free_root(struct json_value_s* json_root) {
+    int32_t retval = -1;
+
+    if (NULL != json_root) {
+        log_debug("Memory address of json_root = %p", json_root);
+        free(json_root);
+        json_root = NULL;
+        retval = 0;
+    }
+
+    return retval;
+}
+
+struct json_object_s* JSON_get_object(struct json_value_s* json_node) {
+    struct json_object_s* json_object = NULL;
+
+    if (NULL == json_node) {
+        log_error("Input json_node is null.");
+        goto EXIT;
+    }
+
+    json_object = json_value_as_object(json_node);
+    if (NULL == json_object) {
+        log_error("json_value_as_object of this node is fail.");
+    }
+
+EXIT:
+    return json_object;
 }
 
 int32_t JSON_traverse_objects(struct json_object_s* json_object) {
