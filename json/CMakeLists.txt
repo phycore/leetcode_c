@@ -9,3 +9,8 @@ target_include_directories(json
     PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}/inc
 )
+
+target_link_libraries(json
+    PUBLIC
+        logging
+)
