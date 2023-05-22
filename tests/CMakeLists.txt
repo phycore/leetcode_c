@@ -24,3 +24,7 @@ target_link_libraries(main_leetcode
 )
 
 add_dependencies(main_leetcode json logging)
+
+add_test(NAME LeetcodeTests COMMAND main_leetcode -j ${MAIN_DIR}/TwoSum_case_1.json)
+#add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND} --verbose)
+#list(APPEND CMAKE_CTEST_ARGUMENTS "--output-on-failure")

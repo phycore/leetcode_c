@@ -67,5 +67,5 @@ int main(int argc, char* argv[]) {
             free(json_file_in_string);
         }
     }
-    return 0;
+    return retval;
 }
