@@ -5,6 +5,7 @@
  * under the terms of the MIT license. See LICENSE for details.
  */
 
+// clang-format off
 #include <stdlib.h>
 #include <string.h>
 #include "map.h"
@@ -191,3 +192,4 @@ const char *map_next_(map_base_t *m, map_iter_t *iter) {
   }
   return (char*) (iter->node + 1);
 }
+// clang-format off

@@ -4,7 +4,7 @@
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the MIT license. See LICENSE for details.
  */
-
+// clang-format off
 #ifndef MAP_H
 #define MAP_H
 
@@ -75,3 +75,4 @@ typedef map_t(float) map_float_t;
 typedef map_t(double) map_double_t;
 
 #endif
+// clang-format on
