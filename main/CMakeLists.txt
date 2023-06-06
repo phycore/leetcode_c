@@ -13,6 +13,10 @@ target_include_directories(main_leetcode
         ${MAIN_DIR}/inc
 )
 
+if(MSVC)
+    add_definitions("-D_CRT_SECURE_NO_WARNINGS")
+endif()
+
 target_link_libraries(main_leetcode
     PRIVATE
         json
