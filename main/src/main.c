@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "Set.h"
 #include "logging.h"
 
 int main(int argc, char* argv[]) {
@@ -16,6 +17,8 @@ int main(int argc, char* argv[]) {
     // char* s = "abcdef";
     // char* s = "dvdf";
     char* s = "ccdefdvdf";
+
+    retval = set_test(s);
 
     return retval;
 }

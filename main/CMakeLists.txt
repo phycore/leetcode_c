@@ -21,6 +21,7 @@ target_link_libraries(main_leetcode
     PRIVATE
         json
         logging
+        set_data_struct
 )
 
-add_dependencies(main_leetcode json logging)
+add_dependencies(main_leetcode json logging set_data_struct)
