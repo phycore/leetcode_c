@@ -1,4 +1,5 @@
 #include "Linked_List.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -39,10 +40,8 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
         }
 
         // Update pointer of source node.
-        if (NULL != p_Node1)
-            p_Node1 = p_Node1->next;
-        if (NULL != p_Node2)
-            p_Node2 = p_Node2->next;
+        if (NULL != p_Node1) p_Node1 = p_Node1->next;
+        if (NULL != p_Node2) p_Node2 = p_Node2->next;
     } while ((NULL != p_Node1) || (NULL != p_Node2) || (carry > 0));
 
     return head_node;

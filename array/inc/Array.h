@@ -6,4 +6,4 @@
  */
 int* twoSum(int* nums, int numsSize, int target, int* returnSize);
 
-#endif // _ARRAY_H
+#endif  // _ARRAY_H
