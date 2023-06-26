@@ -54,3 +54,5 @@ dkms.conf
 # Generate files
 bin/
 build/
+.vs/
+.vscode/
