@@ -10,4 +10,4 @@
 #define log_error(...) printf(__VA_ARGS__); printf("\n");
 // clang-format on
 
-#endif // _LOGGING_H
+#endif  // _LOGGING_H

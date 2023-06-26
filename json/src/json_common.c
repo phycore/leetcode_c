@@ -1,7 +1,9 @@
 #include "json_common.h"
-#include "logging.h"
+
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "logging.h"
 
 static int32_t JSON_dispatch_value_type(struct json_value_s* json_value);
 static int32_t JSON_extract_elements(struct json_object_element_s* json_obj_element);
