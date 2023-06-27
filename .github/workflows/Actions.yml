@@ -35,3 +35,25 @@ jobs:
     #  # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
     #  run: ctest -C ${{env.BUILD_TYPE}}
 
+    # Windows
+    - name: windows-make-directory
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: |
+        mkdir -p ${{github.workspace}}\testing
+        mkdir -p ${{github.workspace}}\testing\Windows
+
+    - name: windows-test-package
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: |
+        Copy-Item -Path "${{github.workspace}}\bin\${{env.BUILD_TYPE}}\main_leetcode.exe" -Destination "${{github.workspace}}\testing\Windows"
+        Copy-Item -Path "${{github.workspace}}\bin\${{env.BUILD_TYPE}}\*.lib" -Destination "${{github.workspace}}\testing\Windows"
+        Copy-Item -Path "${{github.workspace}}\problems\*.json" -Destination "${{github.workspace}}\testing\Windows"
+
+    - name: windows-test-upload
+      if: runner.os == 'Windows'
+      uses: actions/upload-artifact@v3
+      with:
+        name: win-leetcode-artifacts
+        path: ${{github.workspace}}\testing\Windows
