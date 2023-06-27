@@ -107,3 +107,31 @@ jobs:
         .\main_leetcode.exe -j TwoSum_case_1.json
         .\main_leetcode.exe -j AddTwoNumbers_case_1.json
         .\main_leetcode.exe -j LongestSubstring_case_1.json
+
+  linux-tests:
+    needs: build
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: linux-test-download
+      uses: actions/download-artifact@v3
+      with:
+        name: linux-leetcode-artifacts
+        path: ${{github.workspace}}/testing/Linux
+
+    - name: leetcode-check-testing
+      shell: bash
+      run: |
+        ls -al ${{github.workspace}}/testing
+        cd ${{github.workspace}}/testing/Linux
+        chmod u+x main_leetcode
+        ls -al
+
+    - name: leetcode-testing
+      shell: bash
+      working-directory: ${{github.workspace}}/testing/Linux
+      run: |
+        ./main_leetcode -j TwoSum_case_1.json
+        ./main_leetcode -j AddTwoNumbers_case_1.json
+        ./main_leetcode -j LongestSubstring_case_1.json
