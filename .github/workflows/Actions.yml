@@ -57,3 +57,27 @@ jobs:
       with:
         name: win-leetcode-artifacts
         path: ${{github.workspace}}\testing\Windows
+
+    # Linux
+    - name: linux-make-directory
+      if: runner.os == 'Linux'
+      shell: bash
+      run: |
+        mkdir ${{github.workspace}}/testing
+        mkdir ${{github.workspace}}/testing/Linux
+        chmod 777 ${{github.workspace}}/testing
+
+    - name: linux-test-package
+      if: runner.os == 'Linux'
+      shell: bash
+      run: |
+        cp ${{github.workspace}}/bin/main_leetcode ${{github.workspace}}/testing/Linux
+        cp ${{github.workspace}}/bin/*.a ${{github.workspace}}/testing/Linux
+        cp ${{github.workspace}}/problems/*.json ${{github.workspace}}/testing/Linux
+
+    - name: linux-test-upload
+      if: runner.os == 'Linux'
+      uses: actions/upload-artifact@v3
+      with:
+        name: linux-leetcode-artifacts
+        path: ${{github.workspace}}/testing/Linux
