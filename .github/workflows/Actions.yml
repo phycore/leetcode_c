@@ -81,3 +81,29 @@ jobs:
       with:
         name: linux-leetcode-artifacts
         path: ${{github.workspace}}/testing/Linux
+
+  windows-tests:
+    needs: build
+
+    runs-on: windows-latest
+
+    steps:
+    - name: windows-test-download
+      uses: actions/download-artifact@v3
+      with:
+        name: win-leetcode-artifacts
+        path: ${{github.workspace}}/testing/Windows
+
+    - name: leetcode-check-testing
+      shell: pwsh
+      run: |
+        Set-Location ${{github.workspace}}/testing/Windows
+        Get-ChildItem
+
+    - name: leetcode-testing
+      shell: pwsh
+      working-directory: ${{github.workspace}}/testing/Windows
+      run: |
+        .\main_leetcode.exe -j TwoSum_case_1.json
+        .\main_leetcode.exe -j AddTwoNumbers_case_1.json
+        .\main_leetcode.exe -j LongestSubstring_case_1.json
