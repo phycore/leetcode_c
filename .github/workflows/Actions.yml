@@ -50,6 +50,7 @@ jobs:
         Copy-Item -Path "${{github.workspace}}\bin\${{env.BUILD_TYPE}}\main_leetcode.exe" -Destination "${{github.workspace}}\testing\Windows"
         Copy-Item -Path "${{github.workspace}}\bin\${{env.BUILD_TYPE}}\*.lib" -Destination "${{github.workspace}}\testing\Windows"
         Copy-Item -Path "${{github.workspace}}\problems\*.json" -Destination "${{github.workspace}}\testing\Windows"
+        Copy-Item -Path "${{github.workspace}}\unit_test\*.txt" -Destination "${{github.workspace}}\testing\Windows"
 
     - name: windows-test-upload
       if: runner.os == 'Windows'
@@ -74,6 +75,7 @@ jobs:
         cp ${{github.workspace}}/bin/main_leetcode ${{github.workspace}}/testing/Linux
         cp ${{github.workspace}}/bin/*.a ${{github.workspace}}/testing/Linux
         cp ${{github.workspace}}/problems/*.json ${{github.workspace}}/testing/Linux
+        cp ${{github.workspace}}/unit_test/*.txt ${{github.workspace}}/testing/Linux
 
     - name: linux-test-upload
       if: runner.os == 'Linux'
@@ -104,6 +106,12 @@ jobs:
       shell: pwsh
       working-directory: ${{github.workspace}}/testing/Windows
       run: |
+        # exception test
+        .\main_leetcode.exe no_option
+        .\main_leetcode.exe -j no_such_file
+        .\main_leetcode.exe -j empty.txt
+        .\main_leetcode.exe -j any_test.txt
+        # normal test
         .\main_leetcode.exe -j TwoSum_case_1.json
         .\main_leetcode.exe -j AddTwoNumbers_case_1.json
         .\main_leetcode.exe -j LongestSubstring_case_1.json
@@ -132,6 +140,12 @@ jobs:
       shell: bash
       working-directory: ${{github.workspace}}/testing/Linux
       run: |
+        # exception test
+        ./main_leetcode no_option
+        ./main_leetcode -j no_such_file
+        ./main_leetcode -j empty.txt
+        ./main_leetcode -j any_test.txt
+        # normal test
         ./main_leetcode -j TwoSum_case_1.json
         ./main_leetcode -j AddTwoNumbers_case_1.json
         ./main_leetcode -j LongestSubstring_case_1.json
