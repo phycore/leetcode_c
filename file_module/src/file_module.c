@@ -6,7 +6,7 @@
 #include <string.h>
 
 #include "file_utils.h"
-#include "logging.h"
+#include "log.h"
 
 #define FREE(ptr)      \
     if (NULL != ptr) { \

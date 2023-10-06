@@ -5,7 +5,7 @@
 
 #include "file_module.h"
 #include "json_common.h"
-#include "logging.h"
+#include "log.h"
 
 #define PATH_LEN 260
 
