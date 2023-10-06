@@ -20,6 +20,7 @@
  * IN THE SOFTWARE.
  */
 
+// clang-format off
 #include "log.h"
 
 #define MAX_CALLBACKS 32
@@ -166,3 +167,4 @@ void log_log(int level, const char *file, int line, const char *fmt, ...) {
 
   unlock();
 }
+// clang-format on
