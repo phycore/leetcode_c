@@ -9,20 +9,20 @@ static int32_t JSON_dispatch_value_type(struct json_value_s* json_value);
 static int32_t JSON_extract_elements(struct json_object_element_s* json_obj_element);
 
 static int32_t JSON_dispatch_value_type(struct json_value_s* json_value) {
-    int32_t retval = 0;
+    json_common_return_t retval = JSON_MODULE_SUCCESS;
 
     uint32_t counter = 0;
     for (;;) {
         counter++;
         if (counter > 1) {
             log_error("Exception!!! It have no json type.");
-            retval = -1;
+            retval = JSON_MODULE_PARSING_FAIL;
             break;
         }
 
         if (NULL == json_value) {
             log_error("json_value is null.");
-            retval = -1;
+            retval = JSON_MODULE_OBJECT_INVALID;
             break;
         }
 
@@ -79,10 +79,10 @@ static int32_t JSON_dispatch_value_type(struct json_value_s* json_value) {
 }
 
 static int32_t JSON_extract_elements(struct json_object_element_s* json_obj_element) {
-    int32_t retval = 0;
+    json_common_return_t retval = JSON_MODULE_SUCCESS;
     if (NULL == json_obj_element) {
         log_error("json_obj_element is null.");
-        retval = -1;
+        retval = JSON_MODULE_OBJECT_INVALID;
         goto EXIT;
     }
 
@@ -141,13 +141,13 @@ EXIT:
 }
 
 int32_t JSON_free_root(struct json_value_s* json_root) {
-    int32_t retval = -1;
+    json_common_return_t retval = JSON_MODULE_SUCCESS;
 
     if (NULL != json_root) {
         log_debug("Memory address of json_root = %p", json_root);
         free(json_root);
         json_root = NULL;
-        retval = 0;
+        retval = JSON_MODULE_SUCCESS;
     }
 
     return retval;
