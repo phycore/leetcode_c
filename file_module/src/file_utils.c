@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "logging.h"
+#include "log.h"
 
 size_t get_file_size(FILE* fp) {
     size_t data_length = 0;
