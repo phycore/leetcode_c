@@ -5,49 +5,81 @@
 
 #include "log.h"
 
+typedef void* (*json_value_type_fn)(struct json_value_s* const);
+typedef int (*json_value_int_fn)(struct json_value_s* const);
+
+static json_value_type_fn g_json_value_type_fn[] = {
+    json_value_as_string,
+    json_value_as_number,
+    json_value_as_object,
+    json_value_as_array,
+};
+
+static json_value_int_fn g_json_value_int_fn[] = {
+    json_value_is_true,
+    json_value_is_false,
+    json_value_is_null,
+};
+
 static int32_t JSON_dispatch_value_type(struct json_value_s* json_value);
 static int32_t JSON_extract_elements(struct json_object_element_s* json_obj_element);
 
 static int32_t JSON_dispatch_value_type(struct json_value_s* json_value) {
-    int32_t retval = 0;
+    json_common_return_t retval = JSON_MODULE_SUCCESS;
 
-    uint32_t counter = 0;
-    for (;;) {
-        counter++;
-        if (counter > 1) {
-            log_error("Exception!!! It have no json type.");
-            retval = -1;
+    if (NULL == json_value) {
+        log_error("json_value is null.");
+        retval = JSON_MODULE_OBJECT_INVALID;
+        goto EXIT;
+    }
+
+    json_type_t type_index = json_type_string;
+    void* json_type_buffer = NULL;
+    for (; type_index <= json_type_array; type_index++) {
+        json_type_buffer = g_json_value_type_fn[type_index](json_value);
+        if (NULL != json_type_buffer) {
             break;
         }
+    }
 
-        if (NULL == json_value) {
-            log_error("json_value is null.");
-            retval = -1;
-            break;
+    int32_t type_status = 0;
+    // Check json_type_int when only json_type_buffer is null.
+    if (NULL == json_type_buffer) {
+        type_index = json_type_true;
+        for (; type_index <= json_type_null; type_index++) {
+            type_status = g_json_value_int_fn[type_index](json_value);
+            if (0 != type_status) {
+                break;
+            }
         }
+    }
 
-        struct json_string_s* obj_string = json_value_as_string(json_value);
-        if (NULL != obj_string) {
+    if ((NULL == json_type_buffer) && (0 == type_status)) {
+        log_error("There is no json type!");
+        retval = JSON_MODULE_PARSING_FAIL;
+        goto EXIT;
+    }
+
+    switch (type_index) {
+        case json_type_string: {
+            struct json_string_s* obj_string = (struct json_string_s*)json_type_buffer;
             log_debug("json_value = %s", obj_string->string);
             log_debug("json_value_length = %zd", obj_string->string_size);
-            break;
-        }
+        } break;
 
-        struct json_number_s* obj_number = json_value_as_number(json_value);
-        if (NULL != obj_number) {
+        case json_type_number: {
+            struct json_number_s* obj_number = (struct json_number_s*)json_type_buffer;
             log_debug("json_value = %s", obj_number->number);
             log_debug("json_value_length = %zd", obj_number->number_size);
-            break;
-        }
+        } break;
 
-        struct json_object_s* obj = json_value_as_object(json_value);
-        if (NULL != obj) {
+        case json_type_object: {
+            struct json_object_s* obj = (struct json_object_s*)json_type_buffer;
             retval = JSON_traverse_objects(obj);
-            break;
-        }
+        } break;
 
-        struct json_array_s* obj_arr = json_value_as_array(json_value);
-        if (NULL != obj_arr) {
+        case json_type_array: {
+            struct json_array_s* obj_arr = (struct json_array_s*)json_type_buffer;
             struct json_array_element_s* arr_element = obj_arr->start;
             size_t arr_length = obj_arr->length;
             for (size_t arr_idx = 0; arr_idx < arr_length; arr_idx++) {
@@ -56,33 +88,35 @@ static int32_t JSON_dispatch_value_type(struct json_value_s* json_value) {
                 retval = JSON_dispatch_value_type(json_arr_value);
                 arr_element = arr_element->next;
             }
-            break;
-        }
+        } break;
 
-        if (json_value_is_true(json_value)) {
+        case json_type_true: {
             log_debug("json_value is true.");
-            break;
-        }
+        } break;
 
-        if (json_value_is_false(json_value)) {
+        case json_type_false: {
             log_debug("json_value is false.");
-            break;
-        }
+        } break;
 
-        if (json_value_is_null(json_value)) {
+        case json_type_null: {
             log_debug("json_value is null.");
-            break;
-        }
+        } break;
+
+        default: {
+            log_error("Invalid json_type.");
+            retval = JSON_MODULE_PARSING_FAIL;
+        } break;
     }
 
+EXIT:
     return retval;
 }
 
 static int32_t JSON_extract_elements(struct json_object_element_s* json_obj_element) {
-    int32_t retval = 0;
+    json_common_return_t retval = JSON_MODULE_SUCCESS;
     if (NULL == json_obj_element) {
         log_error("json_obj_element is null.");
-        retval = -1;
+        retval = JSON_MODULE_OBJECT_INVALID;
         goto EXIT;
     }
 
@@ -141,13 +175,13 @@ EXIT:
 }
 
 int32_t JSON_free_root(struct json_value_s* json_root) {
-    int32_t retval = -1;
+    json_common_return_t retval = JSON_MODULE_SUCCESS;
 
     if (NULL != json_root) {
         log_debug("Memory address of json_root = %p", json_root);
         free(json_root);
         json_root = NULL;
-        retval = 0;
+        retval = JSON_MODULE_SUCCESS;
     }
 
     return retval;
