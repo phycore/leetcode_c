@@ -13,3 +13,5 @@ target_include_directories(logging
     PRIVATE
         ${LOGGING_DIR}/inc
 )
+
+add_definitions("-DLOG_USE_COLOR")
