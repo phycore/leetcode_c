@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
     }
 
     // Create interface of file handle object.
-    p_ifile_handle = New_FILE_HANDLE();
+    p_ifile_handle = create_file_handle();
     // Input a file path and do make instance.
     retval = p_ifile_handle->make_instance(p_ifile_handle, file_path);
     log_debug("File handle make instance retval = %d", retval);
@@ -85,7 +85,7 @@ int main(int argc, char* argv[]) {
 
     // TODO: json to map.
 EXIT:
-    Delete_FILE_HANDLE(p_ifile_handle);
+    destroy_file_handle(p_ifile_handle);
     if (NULL != json_file_in_string) {
         free(json_file_in_string);
     }

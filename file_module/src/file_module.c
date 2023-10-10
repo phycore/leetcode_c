@@ -346,7 +346,7 @@ EXIT:
     return retval;
 }
 
-ifile_handle_t* New_FILE_HANDLE(void) {
+ifile_handle_t* create_file_handle(void) {
     // TODO: Reference counting in file module.
     ifile_handle_t* p_file_handle = (ifile_handle_t*)calloc(1, sizeof(ifile_handle_t));
     file_handle_set_impl(p_file_handle);
@@ -355,7 +355,7 @@ ifile_handle_t* New_FILE_HANDLE(void) {
     return p_file_handle;
 }
 
-int32_t Delete_FILE_HANDLE(ifile_handle_t* p_ifile_handle) {
+int32_t destroy_file_handle(ifile_handle_t* p_ifile_handle) {
     // TODO: Reference counting in file module.
     int32_t retval = FILE_MODULE_SUCCESS;
 

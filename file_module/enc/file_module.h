@@ -35,7 +35,7 @@ typedef struct file_handle {
     IFILE_HANDLE_BASE(file_handle);
 } ifile_handle_t;
 
-ifile_handle_t* New_FILE_HANDLE(void);
-int32_t Delete_FILE_HANDLE(ifile_handle_t* p_ifile_handle);
+ifile_handle_t* create_file_handle(void);
+int32_t destroy_file_handle(ifile_handle_t* p_ifile_handle);
 
 #endif  // _FILE_MODULE_H
