@@ -28,6 +28,7 @@ typedef enum {
     FILE_MODULE_INSTANCE_INVALID,
     FILE_MODULE_INCORRECT_PARAM,
     FILE_MODULE_OUT_OF_MEMORY,
+    FILE_MODULE_FP_INVALID,
 } file_module_return_t;
 
 typedef enum { GET_STR_RESERVED = 0, GET_STR_BASE_NAME = 1, GET_STR_EXTENSION = 2 } ifile_get_str_t;
