@@ -24,7 +24,7 @@ EXIT:
     return data_length;
 }
 
-char* get_file_base_name(char* file_path) {
+char* get_file_base_name(const char* file_path) {
     if (NULL == file_path) {
         return NULL;
     }
@@ -32,7 +32,7 @@ char* get_file_base_name(char* file_path) {
     return (base_name != NULL) ? (base_name + 1) : (file_path);
 }
 
-char* get_file_extension_name(char* file_path) {
+char* get_file_extension_name(const char* file_path) {
     if (NULL == file_path) {
         return NULL;
     }

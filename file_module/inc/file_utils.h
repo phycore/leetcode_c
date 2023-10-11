@@ -19,8 +19,8 @@ typedef enum {
 #endif
 
 size_t get_file_size(FILE* fp);
-char* get_file_base_name(char* file_path);
-char* get_file_extension_name(char* file_path);
+char* get_file_base_name(const char* file_path);
+char* get_file_extension_name(const char* file_path);
 int read_file_to_buffer(FILE* fp, unsigned char* file_buffer, size_t* file_data_length);
 int read_file_to_string(FILE* fp, unsigned char* file_in_string, size_t* file_in_string_length);
 
