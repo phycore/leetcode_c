@@ -14,6 +14,22 @@
     }                  \
     ptr = NULL
 
+// clang-format off
+static const char* const g_file_operation_mode[] = {"r",
+                                                    "w",
+                                                    "a",
+                                                    "r+",
+                                                    "w+",
+                                                    "a+",
+                                                    "rb",
+                                                    "wb",
+                                                    "ab",
+                                                    "rb+",
+                                                    "wb+",
+                                                    "ab+",
+                                                   };
+
+// clang-format on
 typedef struct file_contents {
     unsigned char* buffer;
     size_t size;
@@ -34,7 +50,8 @@ static int file_handle_set_impl(ifile_handle_t* p_ifile_handle);
 
 static int32_t file_handle_init_impl(ifile_handle_t* p_ifile_handle);
 static int32_t file_handle_uninit_impl(ifile_handle_t* p_ifile_handle);
-static int32_t file_handle_make_instance_impl(ifile_handle_t* p_ifile_handle, char* file_path);
+static int32_t file_handle_make_instance_impl(ifile_handle_t* p_ifile_handle, const char* file_path,
+                                              const int32_t op_mode);
 static int32_t file_handle_get_base_version_impl(ifile_handle_t* p_ifile_handle,
                                                  char* base_version);
 static int32_t file_handle_get_string_impl(ifile_handle_t* p_ifile_handle, int32_t str_type,
@@ -135,7 +152,8 @@ EXIT:
     return retval;
 }
 
-static int32_t file_handle_make_instance_impl(ifile_handle_t* p_ifile_handle, char* file_path) {
+static int32_t file_handle_make_instance_impl(ifile_handle_t* p_ifile_handle, const char* file_path,
+                                              const int32_t op_mode) {
     file_module_return_t retval = FILE_MODULE_SUCCESS;
 
     if (NULL == p_ifile_handle) {
@@ -162,7 +180,7 @@ static int32_t file_handle_make_instance_impl(ifile_handle_t* p_ifile_handle, ch
         p_ifile_handle->uninit(p_ifile_handle);
     }
 
-    p_file_data->fp = fopen(file_path, "rb");
+    p_file_data->fp = fopen(file_path, g_file_operation_mode[op_mode]);
     if (NULL == p_file_data->fp) {
         log_error("File: %s can't be open! errno = %d: %s.", file_path, errno, strerror(errno));
         retval = FILE_MODULE_MAKE_INSTANCE_FAIL;
@@ -346,11 +364,12 @@ EXIT:
     return retval;
 }
 
-ifile_handle_t* create_file_handle(void) {
+ifile_handle_t* create_file_handle(char* file_path, file_operation_mode_t mode) {
     // TODO: Reference counting in file module.
     ifile_handle_t* p_file_handle = (ifile_handle_t*)calloc(1, sizeof(ifile_handle_t));
     file_handle_set_impl(p_file_handle);
     p_file_handle->init(p_file_handle);
+    p_file_handle->make_instance(p_file_handle, file_path, mode);
 
     return p_file_handle;
 }

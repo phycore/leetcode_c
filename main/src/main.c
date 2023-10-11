@@ -27,14 +27,7 @@ int main(int argc, char* argv[]) {
     }
 
     // Create interface of file handle object.
-    p_ifile_handle = create_file_handle();
-    // Input a file path and do make instance.
-    retval = p_ifile_handle->make_instance(p_ifile_handle, file_path);
-    log_debug("File handle make instance retval = %d", retval);
-    if (FILE_MODULE_SUCCESS != retval) {
-        log_error("File handle make instance fail!");
-        goto EXIT;
-    }
+    p_ifile_handle = create_file_handle(file_path, FILE_OP_MODE_TXT_READ);
 
     // log print file base name and extension name.
     char base_name[PATH_LEN] = {'\0'};
