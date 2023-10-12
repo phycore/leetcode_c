@@ -20,3 +20,7 @@ target_link_libraries(map
     PUBLIC
         logging
 )
+
+if(MSVC)
+    add_definitions("-D_CRT_SECURE_NO_WARNINGS")
+endif()
