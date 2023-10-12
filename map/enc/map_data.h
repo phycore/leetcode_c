@@ -1,8 +1,6 @@
 #ifndef _MAP_COMMON_H
 #define _MAP_COMMON_H
 
-#include "map.h"
-
 // clang-format off
 typedef enum {
     MAP_DATA_SUCCESS       = 0,

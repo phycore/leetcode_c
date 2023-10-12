@@ -1,9 +1,11 @@
+#include "map_data.h"
+
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "log.h"
-#include "map_data.h"
+#include "map.h"
 
 #define MAJOR_VER 0
 #define MINOR_VER 0
