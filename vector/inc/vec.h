@@ -8,6 +8,7 @@
 #ifndef VEC_H
 #define VEC_H
 
+// clang-format off
 #include <stdlib.h>
 #include <string.h>
 
@@ -179,3 +180,4 @@ typedef vec_t(float) vec_float_t;
 typedef vec_t(double) vec_double_t;
 
 #endif
+// clang-format on

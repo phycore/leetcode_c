@@ -5,6 +5,7 @@
  * under the terms of the MIT license. See LICENSE for details.
  */
 
+// clang-format off
 #include "vec.h"
 
 
@@ -111,4 +112,4 @@ void vec_swap_(char **data, int *length, int *capacity, int memsz,
     a++, b++;
   }
 }
-
+// clang-format on
