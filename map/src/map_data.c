@@ -16,6 +16,12 @@
         }                           \
     } while (0)
 
+#define FREE(ptr)      \
+    if (NULL != ptr) { \
+        free(ptr);     \
+    }                  \
+    ptr = NULL
+
 typedef struct map_desc {
     uint32_t ID;
     uint32_t major_version;
@@ -68,6 +74,7 @@ int destroy_map_data(void* context) {
     map_deinit(&(map_data->m_float));
     map_deinit(&(map_data->m_double));
 
+    FREE(map_data);
     return retval;
 }
 
