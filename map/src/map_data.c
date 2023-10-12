@@ -80,7 +80,7 @@ int destroy_map_data(void* context) {
     return retval;
 }
 
-int map_data_set_void_pointer(void* context, char* key, void* value) {
+int map_data_set_void_pointer(void* context, const char* key, void* value) {
     map_data_return_t retval = MAP_DATA_SUCCESS;
 
     IS_NULL(context, "Map context is null!", MAP_DATA_CONTEXT_NULL);
@@ -103,7 +103,7 @@ void* map_data_get_void_pointer(void* context, char* key) {
     return *(map_get(&(map_data->m_void), key));
 }
 
-int map_data_set_str(void* context, char* key, char* value) {
+int map_data_set_str(void* context, const char* key, char* value) {
     map_data_return_t retval = MAP_DATA_SUCCESS;
 
     IS_NULL(context, "Map context is null!", MAP_DATA_CONTEXT_NULL);
@@ -133,7 +133,7 @@ int map_data_get_str(void* context, char* key, char* value) {
     return retval;
 }
 
-int map_data_set_int(void* context, char* key, const int value) {
+int map_data_set_int(void* context, const char* key, const int value) {
     map_data_return_t retval = MAP_DATA_SUCCESS;
 
     IS_NULL(context, "Map context is null!", EXIT_FAILURE);
@@ -160,7 +160,7 @@ int map_data_get_int(void* context, char* key, int* value) {
     return retval;
 }
 
-int map_data_set_char(void* context, char* key, const char value) {
+int map_data_set_char(void* context, const char* key, const char value) {
     map_data_return_t retval = MAP_DATA_SUCCESS;
 
     IS_NULL(context, "Map context is null!", MAP_DATA_CONTEXT_NULL);
@@ -189,7 +189,7 @@ int map_data_get_char(void* context, char* key, char* value) {
     return retval;
 }
 
-int map_data_set_float(void* context, char* key, const float value) {
+int map_data_set_float(void* context, const char* key, const float value) {
     map_data_return_t retval = MAP_DATA_SUCCESS;
 
     IS_NULL(context, "Map context is null!", MAP_DATA_CONTEXT_NULL);
@@ -216,7 +216,7 @@ int map_data_get_float(void* context, char* key, float* value) {
     return retval;
 }
 
-int map_data_set_double(void* context, char* key, const double value) {
+int map_data_set_double(void* context, const char* key, const double value) {
     map_data_return_t retval = MAP_DATA_SUCCESS;
 
     IS_NULL(context, "Map context is null!", MAP_DATA_CONTEXT_NULL);
