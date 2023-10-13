@@ -10,8 +10,6 @@ typedef enum {
     JSON_PARSING_HELPER_PARSING_FAIL,
     JSON_PARSING_HELPER_CONTEXT_NULL,
     JSON_PARSING_HELPER_ROOT_NULL,
-    JSON_PARSING_HELPER_NO_JSON_TYPE,
-    JSON_PARSING_HELPER_MAP_SET_FAIL,
 } json_parsing_helper_return_t;
 
 struct json_value_s* init_json_parsing(char* json_in_string, size_t str_length);
