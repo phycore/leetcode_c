@@ -2,6 +2,7 @@ list( APPEND
     JSON_MAP_LIB_OBJS
     src/json_2_map.c
     src/json_parsing_helper.c
+    src/map_setting_helper.c
 )
 
 add_library(json_2_map STATIC ${JSON_MAP_LIB_OBJS})
