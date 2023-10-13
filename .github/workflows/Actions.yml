@@ -104,6 +104,7 @@ jobs:
       shell: pwsh
       working-directory: ${{github.workspace}}/testing/Windows
       run: |
+        .\main_leetcode.exe -j parsing_test_case.json
         .\main_leetcode.exe -j TwoSum_case_1.json
         .\main_leetcode.exe -j AddTwoNumbers_case_1.json
         .\main_leetcode.exe -j LongestSubstring_case_1.json
@@ -132,6 +133,7 @@ jobs:
       shell: bash
       working-directory: ${{github.workspace}}/testing/Linux
       run: |
+        ./main_leetcode -j parsing_test_case.json
         ./main_leetcode -j TwoSum_case_1.json
         ./main_leetcode -j AddTwoNumbers_case_1.json
         ./main_leetcode -j LongestSubstring_case_1.json
