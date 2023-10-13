@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "json_2_map.h"
 #include "log.h"
 
 int main(int argc, char* argv[]) {
@@ -18,6 +19,9 @@ int main(int argc, char* argv[]) {
         goto EXIT;
     }
 
+    ijson_2_map_t* ijson_2_map =
+        create_json2map_handle((void*)file_path, J2MAP_CREATE_MODE_FILE_PATH);
+    destroy_json2map_handle(ijson_2_map);
 EXIT:
     return retval;
 }
