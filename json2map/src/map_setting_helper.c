@@ -209,8 +209,8 @@ static int32_t map_set_json_null(void* context, const char* key) {
     return retval;
 }
 
-static int32_t map_set_json_value(void* context, struct json_string_s* json_key,
-                                  struct json_value_s* json_value) {
+int32_t map_set_json_value(void* context, struct json_string_s* json_key,
+                           struct json_value_s* json_value, traverse_callback_fn callback) {
     map_setting_helper_return_t retval = MAP_SETTING_HELPER_SUCCESS;
     IS_NULL(context, "Map context is null!", MAP_SETTING_HELPER_CONTEXT_NULL);
     IS_NULL(json_key, "json string key is null!", MAP_SETTING_HELPER_JSON_KEY_NULL);
@@ -238,7 +238,9 @@ static int32_t map_set_json_value(void* context, struct json_string_s* json_key,
 
         case json_type_object: {
             struct json_object_s* obj = (struct json_object_s*)json_value_buffer;
-            retval = traverse_all_elements(context, obj);
+            if (NULL != callback) {
+                retval = callback(context, obj);
+            }
         } break;
 
         case json_type_array: {

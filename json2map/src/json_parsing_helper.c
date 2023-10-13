@@ -11,6 +11,8 @@
         }                           \
     } while (0)
 
+static traverse_callback_fn g_callback_fn;
+
 static struct json_value_s* new_json_root(char* json_in_string, size_t str_length);
 static int32_t delete_json_root(struct json_value_s* json_root);
 
@@ -62,7 +64,7 @@ static int32_t extract_elemnts_to_map(void* context, struct json_object_element_
     // extract value
     struct json_value_s* json_value = obj_element->value;
 
-    retval = map_set_json_value(context, json_key, json_value);
+    retval = map_set_json_value(context, json_key, json_value, g_callback_fn);
 
     return retval;
 }
@@ -106,12 +108,14 @@ EXIT:
 }
 
 struct json_value_s* init_json_parsing(char* json_in_string, size_t str_length) {
+    g_callback_fn = traverse_all_elements;
     struct json_value_s* json_root = new_json_root(json_in_string, str_length);
 
     return json_root;
 }
 
 int32_t uninit_json_parsing(struct json_value_s* json_root) {
+    g_callback_fn = NULL;
     delete_json_root(json_root);
 
     return 0;

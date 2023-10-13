@@ -5,6 +5,8 @@
 
 #include "json.h"
 
+typedef int32_t (*traverse_callback_fn)(void*, struct json_object_s*);
+
 typedef enum {
     MAP_SETTING_HELPER_SUCCESS,
     MAP_SETTING_HELPER_FAIL,
@@ -15,6 +17,6 @@ typedef enum {
 } map_setting_helper_return_t;
 
 int32_t map_set_json_value(void* context, struct json_string_s* json_key,
-                           struct json_value_s* json_value);
+                           struct json_value_s* json_value, traverse_callback_fn callback);
 
 #endif  // _MAP_SETTING_HELPER
