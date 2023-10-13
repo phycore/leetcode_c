@@ -25,13 +25,13 @@
     } while (0)
 
 typedef void* (*json_value_type_fn)(struct json_value_s* const);
-typedef int (*json_value_int_fn)(struct json_value_s* const);
+typedef int (*json_value_int_fn)(const struct json_value_s* const);
 
 static json_value_type_fn g_json_value_type_fn[] = {
-    json_value_as_string,
-    json_value_as_number,
-    json_value_as_object,
-    json_value_as_array,
+    (void*)json_value_as_string,
+    (void*)json_value_as_number,
+    (void*)json_value_as_object,
+    (void*)json_value_as_array,
 };
 
 static json_value_int_fn g_json_value_int_fn[] = {
