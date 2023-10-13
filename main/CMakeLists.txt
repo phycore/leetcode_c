@@ -19,9 +19,8 @@ endif()
 
 target_link_libraries(main_leetcode
     PRIVATE
-        json
+        json_2_map
         logging
-        file_module
 )
 
-add_dependencies(main_leetcode json logging)
+add_dependencies(main_leetcode json_2_map logging)
