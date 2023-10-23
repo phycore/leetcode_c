@@ -100,7 +100,10 @@ void* map_data_get_void_pointer(void* context, char* key) {
     IS_NULL(key, "Input key is null!", NULL);
 
     map_data_t* map_data = (map_data_t*)context;
-    return *(map_get(&(map_data->m_void), key));
+    void** get_pointer = map_get(&(map_data->m_void), key);
+    IS_NULL(get_pointer, "Key not exist!", NULL);
+
+    return *get_pointer;
 }
 
 int map_data_set_str(void* context, const char* key, char* value) {
