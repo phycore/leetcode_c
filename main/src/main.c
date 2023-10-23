@@ -12,7 +12,8 @@ int main(int argc, char* argv[]) {
     // Read file from command line.
     char* option = argv[1];
     char* file_path = argv[2];
-    // char* file_path = "D:\\github\\leetcode_c\\bin\\Debug\\TwoSum_case_1.json";
+    // char* file_path = "D:\\github\\leetcode_c\\problems\\TwoSum_case_1.json";
+    // char* file_path = "D:\\github\\leetcode_c\\problems\\parsing_test_case.json";
     if (NULL == file_path) {
         log_error("There is no argv[2]! Please input again.");
         retval = EXIT_FAILURE;
