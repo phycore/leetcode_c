@@ -18,6 +18,14 @@
         }                           \
     } while (0)
 
+#define IS_GET_VAL_NULL(x, message, status) \
+    do {                                    \
+        if (NULL == x) {                    \
+            log_warn(message);              \
+            return status;                  \
+        }                                   \
+    } while (0)
+
 #define FREE(ptr)      \
     if (NULL != ptr) { \
         free(ptr);     \
@@ -101,7 +109,7 @@ void* map_data_get_void_pointer(void* context, char* key) {
 
     map_data_t* map_data = (map_data_t*)context;
     void** get_pointer = map_get(&(map_data->m_void), key);
-    IS_NULL(get_pointer, "Key not exist!", NULL);
+    IS_GET_VAL_NULL(get_pointer, "Key not exist!", NULL);
 
     return *get_pointer;
 }
@@ -128,7 +136,7 @@ int map_data_get_str(void* context, char* key, char* value) {
 
     map_data_t* map_data = (map_data_t*)context;
     char** get_value = map_get(&(map_data->m_str), key);
-    IS_NULL(get_value, "Key not exist!", MAP_DATA_NO_KEY);
+    IS_GET_VAL_NULL(get_value, "Key not exist!", MAP_DATA_NO_KEY);
 
     size_t str_length = strlen(*get_value);
     strncpy(value, *get_value, str_length);
@@ -157,7 +165,7 @@ int map_data_get_int(void* context, char* key, int* value) {
 
     map_data_t* map_data = (map_data_t*)context;
     int* get_value = map_get(&(map_data->m_int), key);
-    IS_NULL(get_value, "Key not exist!", MAP_DATA_NO_KEY);
+    IS_GET_VAL_NULL(get_value, "Key not exist!", MAP_DATA_NO_KEY);
     *value = *get_value;
 
     return retval;
@@ -186,7 +194,7 @@ int map_data_get_char(void* context, char* key, char* value) {
 
     map_data_t* map_data = (map_data_t*)context;
     char* get_value = map_get(&(map_data->m_char), key);
-    IS_NULL(get_value, "Key not exist!", MAP_DATA_NO_KEY);
+    IS_GET_VAL_NULL(get_value, "Key not exist!", MAP_DATA_NO_KEY);
     *value = *get_value;
 
     return retval;
@@ -213,7 +221,7 @@ int map_data_get_float(void* context, char* key, float* value) {
 
     map_data_t* map_data = (map_data_t*)context;
     float* get_value = map_get(&(map_data->m_float), key);
-    IS_NULL(get_value, "Key not exist!", MAP_DATA_NO_KEY);
+    IS_GET_VAL_NULL(get_value, "Key not exist!", MAP_DATA_NO_KEY);
     *value = *get_value;
 
     return retval;
@@ -240,7 +248,7 @@ int map_data_get_double(void* context, char* key, double* value) {
 
     map_data_t* map_data = (map_data_t*)context;
     double* get_value = map_get(&(map_data->m_double), key);
-    IS_NULL(get_value, "Key not exist!", MAP_DATA_NO_KEY);
+    IS_GET_VAL_NULL(get_value, "Key not exist!", MAP_DATA_NO_KEY);
     *value = *get_value;
 
     return retval;
