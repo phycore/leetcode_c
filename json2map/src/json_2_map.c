@@ -8,6 +8,7 @@
 #include "json_parsing_helper.h"
 #include "log.h"
 #include "map_data.h"
+#include "vector_storing_helper.h"
 
 #define PATH_LEN 260
 #define FREE(ptr)          \
@@ -242,6 +243,8 @@ static int32_t json_2_map_set_impl(ijson_2_map_t* p_ijson_2_map, const int32_t m
 
 ijson_2_map_t* create_json2map_handle(void* context, json2map_create_mode_t mode) {
     ijson_2_map_t* p_ijson_2_map = (ijson_2_map_t*)calloc(1, sizeof(ijson_2_map_t));
+    init_vector_storing();
+
     json_2_map_set_impl(p_ijson_2_map, mode);
     p_ijson_2_map->init(p_ijson_2_map);
 
@@ -261,6 +264,7 @@ int32_t destroy_json2map_handle(ijson_2_map_t* p_ijson_2_map) {
     }
 
     p_ijson_2_map->uninit(p_ijson_2_map);
+    uninit_vector_storing();
     FREE(p_ijson_2_map);
 
 EXIT:
