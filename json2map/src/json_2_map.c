@@ -4,9 +4,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "file_module.h"
+#include "json_parsing_helper.h"
 #include "log.h"
 #include "map_data.h"
 
+#define PATH_LEN 260
 #define FREE(ptr)          \
     do {                   \
         if (NULL != ptr) { \
@@ -110,7 +113,43 @@ static int32_t json_2_map_filepath_make_instance_impl(ijson_2_map_t* p_ijson_2_m
         goto EXIT;
     }
 
+    char* file_path = (char*)opaque_data;
+    ifile_handle_t* p_ifile_handle = NULL;
+    p_ifile_handle = create_file_handle(file_path, FILE_OP_MODE_TXT_READ);
+
+    char base_name[PATH_LEN] = {'\0'};
+    char extension_name[PATH_LEN] = {'\0'};
+    p_ifile_handle->get_string(p_ifile_handle, GET_STR_BASE_NAME, base_name);
+    p_ifile_handle->get_string(p_ifile_handle, GET_STR_EXTENSION, extension_name);
+
+    if (strcmp(extension_name, ".json") != 0) {
+        log_error("It's not json file.");
+        retval = JSON_2_MAP_INCORRECT_PARAM;
+        goto EXIT;
+    }
+
+    size_t json_str_length = 0;
+    p_ifile_handle->get_integer(p_ifile_handle, GET_INT_FILE_CONTENTS_STR_LEN,
+                                (uint32_t*)&json_str_length);
+    json_str_length = (json_str_length + 1);
+
+    // Allocate string buffer and get json file in string from file handle.
+    unsigned char* json_file_in_string = NULL;
+    json_file_in_string = (unsigned char*)calloc(json_str_length, sizeof(unsigned char));
+    p_ifile_handle->get_buffer(p_ifile_handle, GET_BUFFER_CONTENTS_STRING,
+                               (uint8_t*)json_file_in_string, (uint32_t*)&json_str_length);
+    log_debug("json_file_in_string: %s", json_file_in_string);
+
+    void* context = p_ijson_2_map->context;
+    struct json_value_s* json_root = init_json_parsing(json_file_in_string, json_str_length);
+    json_parsing_save_map(context, json_root);
+    uninit_json_parsing(json_root);
 EXIT:
+    retval = destroy_file_handle(p_ifile_handle);
+    if (NULL != json_file_in_string) {
+        free(json_file_in_string);
+        json_file_in_string = NULL;
+    }
 
     return retval;
 }
