@@ -29,7 +29,7 @@ char* get_file_base_name(const char* file_path) {
         return NULL;
     }
     char* base_name = strrchr(file_path, (int)PATH_SEP);
-    return (base_name != NULL) ? (base_name + 1) : (file_path);
+    return (base_name != NULL) ? (base_name + 1) : ((char*)file_path);
 }
 
 char* get_file_extension_name(const char* file_path) {
