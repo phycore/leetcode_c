@@ -34,8 +34,8 @@ static int32_t json_2_map_strbuffer_make_instance_impl(ijson_2_map_t* p_ijson_2_
 static int32_t json_2_map_get_base_version_impl(ijson_2_map_t* p_ijson_2_map, char* base_version);
 static int32_t json_2_map_get_components_version(ijson_2_map_t* p_ijson_2_map,
                                                  int32_t component_type, char* lib_version);
-static int32_t json_2_map_get_all_keys_impl(ijson_2_map_t* p_ijson_2_map, char* key,
-                                            uint32_t key_length);
+static int32_t json_2_map_get_all_keys_impl(ijson_2_map_t* p_ijson_2_map, char** keys_list,
+                                            uint32_t* size_of_keys);
 
 static int32_t json_2_map_get_int_impl(ijson_2_map_t* p_ijson_2_map, char* key,
                                        int32_t* get_integer);
@@ -177,39 +177,162 @@ static int32_t json_2_map_get_components_version(ijson_2_map_t* p_ijson_2_map,
     return 0;
 }
 
-static int32_t json_2_map_get_all_keys_impl(ijson_2_map_t* p_ijson_2_map, char* key,
-                                            uint32_t key_length) {
-    return 0;
+static int32_t json_2_map_get_all_keys_impl(ijson_2_map_t* p_ijson_2_map, char** keys_list,
+                                            uint32_t* size_of_keys) {
+    json_2_map_return_t retval = JSON_2_MAP_SUCCESS;
+
+    retval = check_json_2_map_handle(p_ijson_2_map);
+    if (JSON_2_MAP_SUCCESS != retval) {
+        goto EXIT;
+    }
+
+    void* map_data = p_ijson_2_map->context;
+    retval = map_data_get_keys(map_data, keys_list, size_of_keys);
+EXIT:
+    return retval;
 }
 
 static int32_t json_2_map_get_int_impl(ijson_2_map_t* p_ijson_2_map, char* key,
                                        int32_t* get_integer) {
-    return 0;
+    json_2_map_return_t retval = JSON_2_MAP_SUCCESS;
+
+    retval = check_json_2_map_handle(p_ijson_2_map);
+    if (JSON_2_MAP_SUCCESS != retval) {
+        goto EXIT;
+    }
+
+    void* map_data = p_ijson_2_map->context;
+    retval = map_data_get_int(map_data, key, get_integer);
+
+    if (MAP_DATA_SUCCESS == retval) {
+        log_debug("%s, key = %s, get_integer = %d", __func__, key, *get_integer);
+    } else if (MAP_DATA_NO_KEY == retval) {
+        log_warn("%s, there is no key: %s", __func__, key);
+    } else {
+    }
+
+EXIT:
+    return retval;
 }
 
 static int32_t json_2_map_get_char_impl(ijson_2_map_t* p_ijson_2_map, char* key, char* get_char) {
-    return 0;
+    json_2_map_return_t retval = JSON_2_MAP_SUCCESS;
+
+    retval = check_json_2_map_handle(p_ijson_2_map);
+    if (JSON_2_MAP_SUCCESS != retval) {
+        goto EXIT;
+    }
+
+    void* map_data = p_ijson_2_map->context;
+    retval = map_data_get_char(map_data, key, get_char);
+    if (MAP_DATA_SUCCESS == retval) {
+        log_debug("%s, key = %s, get_char = %c", __func__, key, *get_char);
+    } else if (MAP_DATA_NO_KEY == retval) {
+        log_warn("%s, there is no key: %s", __func__, key);
+    } else {
+    }
+
+EXIT:
+    return retval;
 }
 
 static int32_t json_2_map_get_string_impl(ijson_2_map_t* p_ijson_2_map, char* key, char* get_str) {
-    return 0;
+    json_2_map_return_t retval = JSON_2_MAP_SUCCESS;
+
+    retval = check_json_2_map_handle(p_ijson_2_map);
+    if (JSON_2_MAP_SUCCESS != retval) {
+        goto EXIT;
+    }
+
+    void* map_data = p_ijson_2_map->context;
+    retval = map_data_get_str(map_data, key, get_str);
+    if (MAP_DATA_SUCCESS == retval) {
+        log_debug("%s, key = %s, get_string = %s", __func__, key, *get_str);
+    } else if (MAP_DATA_NO_KEY == retval) {
+        log_warn("%s, there is no key: %s", __func__, key);
+    } else {
+    }
+
+EXIT:
+    return retval;
 }
 
 static int32_t json_2_map_get_float_impl(ijson_2_map_t* p_ijson_2_map, char* key,
                                          float* get_float) {
-    return 0;
+    json_2_map_return_t retval = JSON_2_MAP_SUCCESS;
+
+    retval = check_json_2_map_handle(p_ijson_2_map);
+    if (JSON_2_MAP_SUCCESS != retval) {
+        goto EXIT;
+    }
+
+    void* map_data = p_ijson_2_map->context;
+    retval = map_data_get_float(map_data, key, get_float);
+    if (MAP_DATA_SUCCESS == retval) {
+        log_debug("%s, key = %s, get_float = %f", __func__, key, *get_float);
+    } else if (MAP_DATA_NO_KEY == retval) {
+        log_warn("%s, there is no key: %s", __func__, key);
+    } else {
+    }
+
+EXIT:
+    return retval;
 }
 
 static int32_t json_2_map_get_double_impl(ijson_2_map_t* p_ijson_2_map, char* key,
                                           double* get_double) {
-    return 0;
+    json_2_map_return_t retval = JSON_2_MAP_SUCCESS;
+
+    retval = check_json_2_map_handle(p_ijson_2_map);
+    if (JSON_2_MAP_SUCCESS != retval) {
+        goto EXIT;
+    }
+
+    void* map_data = p_ijson_2_map->context;
+    retval = map_data_get_double(map_data, key, get_double);
+    if (MAP_DATA_SUCCESS == retval) {
+        log_debug("%s, key = %s, get_double = %f", __func__, key, *get_double);
+    } else if (MAP_DATA_NO_KEY == retval) {
+        log_warn("%s, there is no key: %s", __func__, key);
+    } else {
+    }
+
+EXIT:
+    return retval;
 }
 
 static void* json_2_map_get_vector_int_impl(ijson_2_map_t* p_ijson_2_map, char* key) {
-    return NULL;
+    json_2_map_return_t retval = check_json_2_map_handle(p_ijson_2_map);
+    if (JSON_2_MAP_SUCCESS != retval) {
+        return NULL;
+    }
+
+    void* map_data = p_ijson_2_map->context;
+    void* vector_int = NULL;
+    vector_int = map_data_get_void_pointer(map_data, key);
+
+    if (NULL == vector_int) {
+        log_warn("%s, there is no key: %s", __func__, key);
+        return NULL;
+    }
+
+    return vector_int;
 }
 static void* json_2_map_get_vector_str_impl(ijson_2_map_t* p_ijson_2_map, char* key) {
-    return NULL;
+    json_2_map_return_t retval = check_json_2_map_handle(p_ijson_2_map);
+    if (JSON_2_MAP_SUCCESS != retval) {
+        return NULL;
+    }
+
+    void* map_data = p_ijson_2_map->context;
+    void* vector_str = NULL;
+    vector_str = map_data_get_void_pointer(map_data, key);
+    if (NULL == vector_str) {
+        log_warn("%s, there is no key: %s", __func__, key);
+        return NULL;
+    }
+
+    return vector_str;
 }
 
 static int32_t json_2_map_set_impl(ijson_2_map_t* p_ijson_2_map, const int32_t mode) {

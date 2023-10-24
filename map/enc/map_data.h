@@ -9,6 +9,7 @@ typedef enum {
     MAP_DATA_VALUE_NULL    = 3,
     MAP_DATA_NO_KEY        = 4,
     MAP_DATA_OUT_OF_MEMORY = 5,
+    MAP_DATA_KEYS_BUFFER_INVALID = 6
 } map_data_return_t;
 // clang-format on
 
@@ -34,5 +35,6 @@ int map_data_set_double(void* context, const char* key, const double value);
 int map_data_get_double(void* context, char* key, double* value);
 
 int map_data_remove_key(void* context, char* key);
+int map_data_get_keys(void* context, char** keys_list, unsigned int* size_of_keys);
 
 #endif  // _MAP_COMMON_H
