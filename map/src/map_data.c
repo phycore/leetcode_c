@@ -32,6 +32,20 @@
     }                  \
     ptr = NULL
 
+#define GET_ALL_KEYS(dest, map, iter, iter_counter)                           \
+    do {                                                                      \
+        while (1) {                                                           \
+            char* key = (char*)map_next(&(map), &(iter));                     \
+            if (NULL != key) {                                                \
+                strncpy(dest[iter_counter], key, strlen(key));                \
+                log_info("%s, get key[%d]: %s", __func__, iter_counter, key); \
+                iter_counter++;                                               \
+            } else {                                                          \
+                break;                                                        \
+            }                                                                 \
+        }                                                                     \
+    } while (0)
+
 typedef struct map_desc {
     uint32_t ID;
     uint32_t major_version;
@@ -267,6 +281,49 @@ int map_data_remove_key(void* context, char* key) {
     map_remove(&(map_data->m_char), key);
     map_remove(&(map_data->m_float), key);
     map_remove(&(map_data->m_double), key);
+
+    return retval;
+}
+
+int map_data_get_keys(void* context, char** keys_list, unsigned int* size_of_keys) {
+    map_data_return_t retval = MAP_DATA_SUCCESS;
+    IS_NULL(context, "Map context is null!", MAP_DATA_CONTEXT_NULL);
+    IS_NULL(keys_list, "Map keys_list buffer is null", MAP_DATA_KEYS_BUFFER_INVALID);
+    IS_NULL(size_of_keys, "Map size of keys is null", MAP_DATA_KEYS_BUFFER_INVALID);
+
+    map_data_t* map_data = (map_data_t*)context;
+
+    map_iter_t iter_void = map_iter(map_data->m_void);
+    map_iter_t iter_str = map_iter(map_data->m_str);
+    map_iter_t iter_int = map_iter(map_data->m_int);
+    map_iter_t iter_char = map_iter(map_data->m_char);
+    map_iter_t iter_float = map_iter(map_data->m_float);
+    map_iter_t iter_double = map_iter(map_data->m_double);
+
+    // TODO: examine length of keys list more efective and safe.
+    size_t keys_iter_counter = 0;
+    size_t safe_offset = 50;
+
+    if ((keys_iter_counter + safe_offset) < *size_of_keys)
+        GET_ALL_KEYS(keys_list, map_data->m_void, iter_void, keys_iter_counter);
+    if ((keys_iter_counter + safe_offset) < *size_of_keys)
+        GET_ALL_KEYS(keys_list, map_data->m_str, iter_str, keys_iter_counter);
+    if ((keys_iter_counter + safe_offset) < *size_of_keys)
+        GET_ALL_KEYS(keys_list, map_data->m_int, iter_int, keys_iter_counter);
+    if ((keys_iter_counter + safe_offset) < *size_of_keys)
+        GET_ALL_KEYS(keys_list, map_data->m_char, iter_char, keys_iter_counter);
+    if ((keys_iter_counter + safe_offset) < *size_of_keys)
+        GET_ALL_KEYS(keys_list, map_data->m_float, iter_float, keys_iter_counter);
+    if ((keys_iter_counter + safe_offset) < *size_of_keys)
+        GET_ALL_KEYS(keys_list, map_data->m_double, iter_double, keys_iter_counter);
+
+    if ((keys_iter_counter + safe_offset) >= *size_of_keys) {
+        log_warn("%s, expect keys_list len = (%d + %d); real keys_list len = %d.", __func__,
+                 keys_iter_counter, safe_offset, *size_of_keys);
+        retval = MAP_DATA_OUT_OF_MEMORY;
+    }
+
+    *size_of_keys = (unsigned int)keys_iter_counter;
 
     return retval;
 }
