@@ -179,7 +179,17 @@ static int32_t json_2_map_get_components_version(ijson_2_map_t* p_ijson_2_map,
 
 static int32_t json_2_map_get_all_keys_impl(ijson_2_map_t* p_ijson_2_map, char** keys_list,
                                             uint32_t* size_of_keys) {
-    return 0;
+    json_2_map_return_t retval = JSON_2_MAP_SUCCESS;
+
+    retval = check_json_2_map_handle(p_ijson_2_map);
+    if (JSON_2_MAP_SUCCESS != retval) {
+        goto EXIT;
+    }
+
+    void* map_data = p_ijson_2_map->context;
+    retval = map_data_get_keys(map_data, keys_list, size_of_keys);
+EXIT:
+    return retval;
 }
 
 static int32_t json_2_map_get_int_impl(ijson_2_map_t* p_ijson_2_map, char* key,
