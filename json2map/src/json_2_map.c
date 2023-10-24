@@ -34,8 +34,8 @@ static int32_t json_2_map_strbuffer_make_instance_impl(ijson_2_map_t* p_ijson_2_
 static int32_t json_2_map_get_base_version_impl(ijson_2_map_t* p_ijson_2_map, char* base_version);
 static int32_t json_2_map_get_components_version(ijson_2_map_t* p_ijson_2_map,
                                                  int32_t component_type, char* lib_version);
-static int32_t json_2_map_get_all_keys_impl(ijson_2_map_t* p_ijson_2_map, char* key,
-                                            uint32_t key_length);
+static int32_t json_2_map_get_all_keys_impl(ijson_2_map_t* p_ijson_2_map, char** keys_list,
+                                            uint32_t* size_of_keys);
 
 static int32_t json_2_map_get_int_impl(ijson_2_map_t* p_ijson_2_map, char* key,
                                        int32_t* get_integer);
@@ -177,8 +177,8 @@ static int32_t json_2_map_get_components_version(ijson_2_map_t* p_ijson_2_map,
     return 0;
 }
 
-static int32_t json_2_map_get_all_keys_impl(ijson_2_map_t* p_ijson_2_map, char* key,
-                                            uint32_t key_length) {
+static int32_t json_2_map_get_all_keys_impl(ijson_2_map_t* p_ijson_2_map, char** keys_list,
+                                            uint32_t* size_of_keys) {
     return 0;
 }
 
