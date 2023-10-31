@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include "commands.h"
+#include "do_problems_api.h"
 #include "json_2_map.h"
 #include "log.h"
 #include "mem_utils.h"
@@ -42,10 +43,13 @@ int32_t command_handler(uint32_t cmd_id, input_data_t* in_data, output_data_t* o
 
     switch (cmd_id) {
         case CMD_LEETCODE_TWO_SUM: {
+            retval = do_TwoSum(order, input_list, input_list_len, output_list, output_list_len);
             break;
         }
 
         case CMD_LEETCODE_ADD_TWO_NUMBERS: {
+            retval =
+                do_AddTwoNumbers(order, input_list, input_list_len, output_list, output_list_len);
             break;
         }
 

@@ -18,5 +18,6 @@ target_include_directories(cmd_invoke
 target_link_libraries(cmd_invoke
     PUBLIC
         json_2_map
+        problems_api
         logging
 )
