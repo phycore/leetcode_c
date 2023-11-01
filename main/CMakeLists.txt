@@ -20,6 +20,7 @@ endif()
 target_link_libraries(main_leetcode
     PRIVATE
         json_2_map
+        cmd_invoke
         logging
 )
 
