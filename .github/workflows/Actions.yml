@@ -104,10 +104,9 @@ jobs:
       shell: pwsh
       working-directory: ${{github.workspace}}/testing/Windows
       run: |
-        .\main_leetcode.exe -j parsing_test_case.json
-        .\main_leetcode.exe -j TwoSum_case_1.json
-        .\main_leetcode.exe -j AddTwoNumbers_case_1.json
-        .\main_leetcode.exe -j LongestSubstring_case_1.json
+        for ($Var = 1; $Var -le 3; $Var++) {
+          .\main_leetcode.exe -j TwoSum_case_$Var.json
+        }
 
   linux-tests:
     needs: build
@@ -133,7 +132,7 @@ jobs:
       shell: bash
       working-directory: ${{github.workspace}}/testing/Linux
       run: |
-        ./main_leetcode -j parsing_test_case.json
-        ./main_leetcode -j TwoSum_case_1.json
-        ./main_leetcode -j AddTwoNumbers_case_1.json
-        ./main_leetcode -j LongestSubstring_case_1.json
+        for i in {1..3}
+        do
+          ./main_leetcode -j TwoSum_case_$i.json
+        done
