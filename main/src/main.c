@@ -10,6 +10,8 @@
 int main(int argc, char* argv[]) {
     int retval = EXIT_SUCCESS;
 
+    log_set_level(LOG_INFO);
+
     // Read file from command line.
     char* option = argv[1];
     char* file_path = argv[2];
