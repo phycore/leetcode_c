@@ -32,18 +32,18 @@
     }                  \
     ptr = NULL
 
-#define GET_ALL_KEYS(dest, map, iter, iter_counter)                           \
-    do {                                                                      \
-        while (1) {                                                           \
-            char* key = (char*)map_next(&(map), &(iter));                     \
-            if (NULL != key) {                                                \
-                strncpy(dest[iter_counter], key, strlen(key));                \
+#define GET_ALL_KEYS(dest, map, iter, iter_counter)                            \
+    do {                                                                       \
+        while (1) {                                                            \
+            char* key = (char*)map_next(&(map), &(iter));                      \
+            if (NULL != key) {                                                 \
+                strncpy(dest[iter_counter], key, strlen(key));                 \
                 log_info("%s, get key[%d]: %s", __func__, iter_counter, key); \
-                iter_counter++;                                               \
-            } else {                                                          \
-                break;                                                        \
-            }                                                                 \
-        }                                                                     \
+                iter_counter++;                                                \
+            } else {                                                           \
+                break;                                                         \
+            }                                                                  \
+        }                                                                      \
     } while (0)
 
 typedef struct map_desc {
@@ -71,8 +71,8 @@ void* create_map_data(int ID) {
     map_data->desc.ID = ID;
     map_data->desc.major_version = (uint32_t)MAJOR_VER;
     map_data->desc.minor_version = (uint32_t)MINOR_VER;
-    log_info("map_data ID = %d; major_version = %d; minor_version = %d", map_data->desc.ID,
-             map_data->desc.major_version, map_data->desc.minor_version);
+    log_debug("map_data ID = %d; major_version = %d; minor_version = %d", map_data->desc.ID,
+              map_data->desc.major_version, map_data->desc.minor_version);
 
     map_init(&(map_data->m_void));
     map_init(&(map_data->m_str));

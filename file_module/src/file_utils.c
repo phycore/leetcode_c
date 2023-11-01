@@ -18,7 +18,7 @@ size_t get_file_size(FILE* fp) {
     data_length = ftell(fp);
     fseek(fp, 0, SEEK_SET);
 
-    log_info("file_size = %zd", data_length);
+    log_info("%s, file_size = %zd bytes", __func__, data_length);
 
 EXIT:
     return data_length;
