@@ -38,7 +38,7 @@ static struct json_value_s* new_json_root(char* json_in_string, size_t str_lengt
         goto EXIT;
     }
 
-    log_info("%s, json_root_type is %zd.", __func__, json_root->type);
+    log_debug("%s, json_root_type is %zd.", __func__, json_root->type);
 
 EXIT:
     return json_root;
