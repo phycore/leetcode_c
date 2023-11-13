@@ -57,6 +57,12 @@ int32_t command_handler(uint32_t cmd_id, input_data_t* in_data, output_data_t* o
             break;
         }
 
+        case CMD_ALG_BUBBLE_SORT:
+        case CMD_ALG_SELECTION_SORT: {
+            retval = do_sort(order, input_list, input_list_len, output_list, output_list_len);
+            break;
+        }
+
         default: {
             break;
         }
