@@ -12,5 +12,6 @@
 
 DECLARE_API(do_TwoSum);
 DECLARE_API(do_AddTwoNumbers);
+DECLARE_API(do_sort);
 
 #endif  // _DO_PROB_API

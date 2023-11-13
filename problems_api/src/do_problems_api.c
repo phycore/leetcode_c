@@ -6,7 +6,10 @@
 #include "Linked_List.h"
 #include "json_2_map.h"
 #include "log.h"
+#include "sorting.h"
 #include "vec.h"
+
+#define SORT_ALG_OFFSET 4000  // It's ALG_BASE in commands.h
 
 #define BEGIN_INPUT()                         \
     do {                                      \
@@ -27,6 +30,11 @@
     do {                                       \
         log_info("End Output Information:\n"); \
     } while (0)
+
+static sort_fn g_sort_alg[] = {
+    bubble_sort,
+    selection_sort
+};
 
 int32_t do_TwoSum(void* context, char** in_list, size_t in_list_len, char** out_list,
                   size_t out_list_len) {
@@ -111,6 +119,47 @@ int32_t do_AddTwoNumbers(void* context, char** in_list, size_t in_list_len, char
     }
 
     // struct ListNode* ans_node = addTwoNumbers(l1, l2);
+
+    return 0;
+}
+
+int32_t do_sort(void* context, char** in_list, size_t in_list_len, char** out_list,
+                size_t out_list_len) {
+    ijson_2_map_t* order = (ijson_2_map_t*)context;
+
+    int32_t problem_id = 0;
+    vec_int_t* nums_val = NULL;
+    int nums[MAX_INT_ARR_SIZE] = {0};
+    int numsSize = 0;
+
+    for (size_t keys_idx = 0; keys_idx < in_list_len; keys_idx++) {
+        if (0 == strcmp(in_list[keys_idx], "problem_id")) {
+            order->map_get_int(order, in_list[keys_idx], &problem_id);
+        }
+
+        if (0 == strcmp(in_list[keys_idx], "nums")) {
+            nums_val = order->map_get_vector_int(order, in_list[keys_idx]);
+            numsSize = nums_val->length;
+            for (size_t idx = 0; idx < numsSize; idx++) {
+                *(nums + idx) = nums_val->data[idx];
+            }
+        }
+    }
+
+    BEGIN_INPUT();
+    for (size_t idx = 0; idx < numsSize; idx++) {
+        log_info("%s, Input: nums[%d] = %d", __func__, idx, *(nums + idx));
+    }
+    END_INPUT();
+
+    size_t sort_alg_index = ((size_t)problem_id - (size_t)SORT_ALG_OFFSET - (size_t)1);
+    g_sort_alg[sort_alg_index](nums, numsSize);
+
+    BEGIN_OUTPUT();
+    for (int idx = 0; idx < numsSize; idx++) {
+        log_info("%s, Output: nums[%d] = %d", __func__, idx, *(nums + idx));
+    }
+    END_OUTPUT();
 
     return 0;
 }
