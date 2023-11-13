@@ -20,5 +20,6 @@ target_link_libraries(problems_api
         vector
         array
         linked_list
+        sort
         logging
 )
