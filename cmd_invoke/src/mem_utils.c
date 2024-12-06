@@ -18,6 +18,7 @@ char** new_char_list(size_t list_length, size_t key_length) {
         if (NULL == list[list_index]) {
             log_error("%s, fail", __func__);
             delete_char_list(list, list_length);
+            list = NULL;
             break;
         }
     }
