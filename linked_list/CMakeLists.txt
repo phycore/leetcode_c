@@ -9,3 +9,8 @@ target_include_directories(linked_list
     PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}/inc
 )
+
+target_link_libraries(linked_list
+    PUBLIC
+        logging
+)

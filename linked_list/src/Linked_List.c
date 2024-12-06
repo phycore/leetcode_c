@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "log.h"
+
 struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
     size_t node_size = sizeof(struct ListNode);
     struct ListNode* p_Node1 = l1;
