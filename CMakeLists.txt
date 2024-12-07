@@ -17,10 +17,15 @@ endif()
 
 message(LEETCODE_TESTS=${LEETCODE_TESTS})
 
+set(LOG_LEVEL_DEBUG 1)
+set(LOG_LEVEL_INFO 2)
+
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     message("--Built: Debug build")
+    add_compile_definitions(LOG_LEVEL=${LOG_LEVEL_DEBUG})
 elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
     message("--Built: Release build")
+    add_compile_definitions(LOG_LEVEL=${LOG_LEVEL_INFO})
 endif()
 
 if(${LEETCODE_TESTS} EQUAL 1)
