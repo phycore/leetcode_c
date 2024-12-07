@@ -174,6 +174,7 @@ static int32_t file_handle_uninit_impl(ifile_handle_t* p_ifile_handle) {
     p_file_data->ext_name = NULL;
     FREE(p_file_data->contents_buffer.buffer);
     FREE(p_file_data->contents_string.buffer);
+    FREE(p_ifile_handle->context);
 
     memset(p_file_data, 0, sizeof(file_data_t));
 
