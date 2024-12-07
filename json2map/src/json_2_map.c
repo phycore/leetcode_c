@@ -99,6 +99,7 @@ static int32_t json_2_map_uninit_impl(ijson_2_map_t* p_ijson_2_map) {
     void* context = p_ijson_2_map->context;
     if (NULL != context) {
         destroy_map_data(context);
+        p_ijson_2_map->context = NULL;
     }
 
 EXIT:
