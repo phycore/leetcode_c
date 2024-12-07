@@ -89,36 +89,62 @@ int32_t do_AddTwoNumbers(void* context, char** in_list, size_t in_list_len, char
     vec_int_t* l1_val = NULL;
     vec_int_t* l2_val = NULL;
 
-    struct ListNode ans = {0};
-    struct ListNode l1 = {0};
-    struct ListNode l2 = {0};
+    struct SinglyList* p_expect_list_ans = NewList();
+    struct SinglyList* p_list1 = NewList();
+    struct SinglyList* p_list2 = NewList();
+
+    BEGIN_INPUT();
     for (size_t keys_idx = 0; keys_idx < in_list_len; keys_idx++) {
         if (0 == strcmp(in_list[keys_idx], "ans")) {
             ans_val = order->map_get_vector_int(order, in_list[keys_idx]);
             size_t ans_size = ans_val->length;
             for (size_t idx = 0; idx < ans_size; idx++) {
-                // TODO: push node.
+                int push_val = ans_val->data[idx];
+                PushNode(p_expect_list_ans, push_val);
             }
+            log_info("%s, Expect ans_node:", __func__);
+            TraversePrintNodes(p_expect_list_ans);
         }
 
         if (0 == strcmp(in_list[keys_idx], "l1")) {
             l1_val = order->map_get_vector_int(order, in_list[keys_idx]);
             size_t l1_size = l1_val->length;
             for (size_t idx = 0; idx < l1_size; idx++) {
-                // TODO: push node.
+                int push_val = l1_val->data[idx];
+                PushNode(p_list1, push_val);
             }
+            log_info("%s, Input l1_node:", __func__);
+            TraversePrintNodes(p_list1);
         }
 
         if (0 == strcmp(in_list[keys_idx], "l2")) {
             l2_val = order->map_get_vector_int(order, in_list[keys_idx]);
             size_t l2_size = l2_val->length;
             for (size_t idx = 0; idx < l2_size; idx++) {
-                // TODO: push node.
+                int push_val = l2_val->data[idx];
+                PushNode(p_list2, push_val);
             }
+            log_info("%s, Input l2_node:", __func__);
+            TraversePrintNodes(p_list2);
         }
     }
+    END_INPUT();
 
-    // struct ListNode* ans_node = addTwoNumbers(l1, l2);
+    struct ListNode* l1 = p_list1->p_Head;
+    struct ListNode* l2 = p_list2->p_Head;
+    struct SinglyList* p_output_ans_list = NewList();
+    p_output_ans_list->p_Head = addTwoNumbers(l1, l2);
+    p_output_ans_list->length = GetListLength(p_output_ans_list);
+
+    BEGIN_OUTPUT();
+    log_info("%s, Output ans_node:", __func__);
+    TraversePrintNodes(p_output_ans_list);
+    END_OUTPUT();
+
+    DeleteList(p_expect_list_ans);
+    DeleteList(p_list1);
+    DeleteList(p_list2);
+    DeleteList(p_output_ans_list);
 
     return 0;
 }
