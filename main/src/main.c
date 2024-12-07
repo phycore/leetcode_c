@@ -7,10 +7,19 @@
 #include "json_2_map.h"
 #include "log.h"
 
+#ifdef _CRTDBG_MAP_ALLOC
+#include <crtdbg.h>
+#include <stdlib.h>
+#endif
+
 int main(int argc, char* argv[]) {
+#ifdef _CRTDBG_MAP_ALLOC
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+#endif
     int retval = EXIT_SUCCESS;
 
-    log_set_level(LOG_INFO);
+    // LOG_LEVEL was defined by CMakeLists.txt
+    log_set_level(LOG_LEVEL);
 
     // Read file from command line.
     char* option = argv[1];
@@ -38,5 +47,14 @@ int main(int argc, char* argv[]) {
 
     destroy_json2map_handle(ijson_2_map);
 EXIT:
+
+#ifdef _CRTDBG_MAP_ALLOC
+    log_debug("%s, --Begin Memory Leak Detection--", __func__);
+    _CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
+    _CrtCheckMemory();
+    _CrtDumpMemoryLeaks();
+    log_debug("%s, --End Memory Leak Detection--", __func__);
+#endif
+
     return retval;
 }
