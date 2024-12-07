@@ -6,12 +6,22 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "Release")
+endif()
+
 set(LEETCODE_TESTS 1)
 if(NOT DEFINED LEETCODE_TESTS)
 set(LEETCODE_TESTS 0)
 endif()
 
 message(LEETCODE_TESTS=${LEETCODE_TESTS})
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    message("--Built: Debug build")
+elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
+    message("--Built: Release build")
+endif()
 
 if(${LEETCODE_TESTS} EQUAL 1)
     add_subdirectory(main)
