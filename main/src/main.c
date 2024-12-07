@@ -10,7 +10,8 @@
 int main(int argc, char* argv[]) {
     int retval = EXIT_SUCCESS;
 
-    log_set_level(LOG_INFO);
+    // LOG_LEVEL was defined by CMakeLists.txt
+    log_set_level(LOG_LEVEL);
 
     // Read file from command line.
     char* option = argv[1];
