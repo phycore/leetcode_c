@@ -55,4 +55,3 @@ dkms.conf
 bin/
 build/
 .vs/
-.vscode/
