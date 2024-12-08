@@ -7,7 +7,7 @@
             "request": "launch",
             // Resolved by CMake Tools:
             "program": "${command:cmake.launchTargetPath}",
-            "args": [],
+            "args": ["-j", "${workspaceFolder}/problems/AddTwoNumbers_case_1.json"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [
