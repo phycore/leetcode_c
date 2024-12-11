@@ -9,6 +9,14 @@
 #include "sorting.h"
 #include "vec.h"
 
+#if defined (_WIN32)
+#include <windows.h>
+#define PATH_LEN MAX_PATH
+#elif defined (__linux__)
+#include <limits.h>
+#define PATH_LEN PATH_MAX
+#endif
+
 #define SORT_ALG_OFFSET 4000  // It's ALG_BASE in commands.h
 
 #define BEGIN_INPUT()                         \
