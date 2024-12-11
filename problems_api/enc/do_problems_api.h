@@ -10,6 +10,7 @@
     int32_t name(void* context, char** in_list, size_t in_list_len, char** out_list, \
                  size_t out_list_len)
 
+DECLARE_API(do_json_2_map_test);
 DECLARE_API(do_TwoSum);
 DECLARE_API(do_AddTwoNumbers);
 DECLARE_API(do_LongestSubstringWithoutRepeating);
