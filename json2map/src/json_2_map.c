@@ -19,6 +19,8 @@
         ptr = NULL;        \
     } while (0)
 
+static struct json_value_s* g_json_root;
+
 static int32_t check_json_2_map_handle(ijson_2_map_t* p_ijson_2_map);
 
 static int32_t json_2_map_set_impl(ijson_2_map_t* p_ijson_2_map, const int32_t mode);
@@ -96,6 +98,11 @@ static int32_t json_2_map_uninit_impl(ijson_2_map_t* p_ijson_2_map) {
         goto EXIT;
     }
 
+    if (NULL != g_json_root) {
+        uninit_json_parsing(g_json_root);
+        g_json_root = NULL;
+    }
+
     void* context = p_ijson_2_map->context;
     if (NULL != context) {
         destroy_map_data(context);
@@ -143,9 +150,13 @@ static int32_t json_2_map_filepath_make_instance_impl(ijson_2_map_t* p_ijson_2_m
     log_debug("json_file_in_string: %s", json_file_in_string);
 
     void* context = p_ijson_2_map->context;
-    struct json_value_s* json_root = init_json_parsing(json_file_in_string, json_str_length);
-    json_parsing_save_map(context, json_root);
-    uninit_json_parsing(json_root);
+    if (NULL == g_json_root) {
+        // TODO: Adjust json_root and map_data lifetime.
+        g_json_root = init_json_parsing(json_file_in_string, json_str_length);
+    }
+
+    json_parsing_save_map(context, g_json_root);
+
 EXIT:
     retval = destroy_file_handle(p_ifile_handle);
     if (NULL != json_file_in_string) {
@@ -248,7 +259,7 @@ static int32_t json_2_map_get_string_impl(ijson_2_map_t* p_ijson_2_map, char* ke
     void* map_data = p_ijson_2_map->context;
     retval = map_data_get_str(map_data, key, get_str);
     if (MAP_DATA_SUCCESS == retval) {
-        log_debug("%s, key = %s, get_string = %s", __func__, key, *get_str);
+        log_debug("%s, key = %s, get_string = %s", __func__, key, get_str);
     } else if (MAP_DATA_NO_KEY == retval) {
         log_warn("%s, there is no key: %s", __func__, key);
     } else {

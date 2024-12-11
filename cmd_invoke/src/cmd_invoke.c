@@ -54,6 +54,8 @@ int32_t command_handler(uint32_t cmd_id, input_data_t* in_data, output_data_t* o
         }
 
         case CMD_LEETCODE_LONGEST_SUBSTRING_WITHOUT_REPEATING: {
+            retval = do_LongestSubstringWithoutRepeating(order, input_list, input_list_len,
+                                                         output_list, output_list_len);
             break;
         }
 

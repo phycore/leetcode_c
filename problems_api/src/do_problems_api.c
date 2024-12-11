@@ -9,6 +9,14 @@
 #include "sorting.h"
 #include "vec.h"
 
+#if defined (_WIN32)
+#include <windows.h>
+#define PATH_LEN MAX_PATH
+#elif defined (__linux__)
+#include <limits.h>
+#define PATH_LEN PATH_MAX
+#endif
+
 #define SORT_ALG_OFFSET 4000  // It's ALG_BASE in commands.h
 
 #define BEGIN_INPUT()                         \
@@ -145,6 +153,41 @@ int32_t do_AddTwoNumbers(void* context, char** in_list, size_t in_list_len, char
     DeleteList(p_list1);
     DeleteList(p_list2);
     DeleteList(p_output_ans_list);
+
+    return 0;
+}
+
+int32_t do_LongestSubstringWithoutRepeating(void* context, char** in_list, size_t in_list_len,
+                                            char** out_list, size_t out_list_len) {
+    ijson_2_map_t* order = (ijson_2_map_t*)context;
+
+    int32_t ans = 0;
+    char ans_s[PATH_LEN] = {'\0'};
+    char s[PATH_LEN] = {'\0'};
+    BEGIN_INPUT();
+    for (size_t keys_idx = 0; keys_idx < in_list_len; keys_idx++) {
+        if (0 == strcmp(in_list[keys_idx], "ans")) {
+            order->map_get_int(order, in_list[keys_idx], &ans);
+            log_info("%s, ans = %d", __func__, ans);
+        }
+
+        if (0 == strcmp(in_list[keys_idx], "ans_s")) {
+            order->map_get_string(order, in_list[keys_idx], ans_s);
+            log_info("%s, ans_s: %s", __func__, ans_s);
+        }
+
+        if (0 == strcmp(in_list[keys_idx], "s")) {
+            order->map_get_string(order, in_list[keys_idx], s);
+            log_info("%s, s: %s", __func__, s);
+        }
+    }
+    END_INPUT();
+
+    size_t length_of_longest_substring = lengthOfLongestSubstring(s);
+
+    BEGIN_OUTPUT();
+    log_info("%s, length of longest substring = %zu", __func__, length_of_longest_substring);
+    END_OUTPUT();
 
     return 0;
 }
