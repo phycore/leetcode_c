@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "log.h"
+
 int* twoSum(int* nums, int numsSize, int target, int* returnSize) {
     *returnSize = 2;
     int arraySize = ((*returnSize) * sizeof(int));

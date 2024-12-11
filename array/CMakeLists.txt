@@ -9,3 +9,8 @@ target_include_directories(array
     PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}/inc
 )
+
+target_link_libraries(array
+    PUBLIC
+        logging
+)
