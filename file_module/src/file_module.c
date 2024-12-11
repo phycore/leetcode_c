@@ -425,10 +425,23 @@ EXIT:
 
 ifile_handle_t* create_file_handle(char* file_path, file_operation_mode_t mode) {
     // TODO: Reference counting in file module.
+
+    file_module_return_t retval = FILE_MODULE_SUCCESS;
     ifile_handle_t* p_file_handle = (ifile_handle_t*)calloc(1, sizeof(ifile_handle_t));
     file_handle_set_impl(p_file_handle, mode);
-    p_file_handle->init(p_file_handle);
-    p_file_handle->make_instance(p_file_handle, file_path, mode);
+    retval = p_file_handle->init(p_file_handle);
+    if (FILE_MODULE_SUCCESS != retval) {
+        log_error("%s, file handle init fail!", __func__);
+        destroy_file_handle(p_file_handle);
+        p_file_handle = NULL;
+    }
+
+    retval = p_file_handle->make_instance(p_file_handle, file_path, mode);
+    if (FILE_MODULE_SUCCESS != retval) {
+        log_error("%s, file handle make instance fail!", __func__);
+        destroy_file_handle(p_file_handle);
+        p_file_handle = NULL;
+    }
 
     return p_file_handle;
 }
@@ -437,15 +450,11 @@ int32_t destroy_file_handle(ifile_handle_t* p_ifile_handle) {
     // TODO: Reference counting in file module.
     int32_t retval = FILE_MODULE_SUCCESS;
 
-    if (NULL == p_ifile_handle) {
-        log_error("Iterface of file handle is null!");
-        retval = FILE_MODULE_IFACE_INVALID;
-        goto EXIT;
+    if (NULL != p_ifile_handle) {
+        p_ifile_handle->uninit(p_ifile_handle);
     }
 
-    p_ifile_handle->uninit(p_ifile_handle);
     FREE(p_ifile_handle);
 
-EXIT:
     return retval;
 }
