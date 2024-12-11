@@ -42,6 +42,12 @@ int32_t command_handler(uint32_t cmd_id, input_data_t* in_data, output_data_t* o
     uint32_t output_list_len = MAX_SIZE_OF_KEYS;
 
     switch (cmd_id) {
+        case CMD_JSON_2_MAP_TEST: {
+            retval =
+                do_json_2_map_test(order, input_list, input_list_len, output_list, output_list_len);
+            break;
+        }
+
         case CMD_LEETCODE_TWO_SUM: {
             retval = do_TwoSum(order, input_list, input_list_len, output_list, output_list_len);
             break;
