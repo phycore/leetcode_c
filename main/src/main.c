@@ -33,6 +33,11 @@ int main(int argc, char* argv[]) {
 
     ijson_2_map_t* ijson_2_map =
         create_json2map_handle((void*)file_path, J2MAP_CREATE_MODE_FILE_PATH);
+    if (NULL == ijson_2_map) {
+        log_error("Create json 2 map fail!");
+        retval = EXIT_FAILURE;
+        goto EXIT;
+    }
 
     int32_t cmd_id = 0;
     input_data_t in_data = {0};
