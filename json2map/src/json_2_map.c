@@ -116,6 +116,7 @@ EXIT:
 static int32_t json_2_map_filepath_make_instance_impl(ijson_2_map_t* p_ijson_2_map,
                                                       void* opaque_data, uint32_t buffer_size) {
     json_2_map_return_t retval = JSON_2_MAP_SUCCESS;
+    unsigned char* json_file_in_string = NULL;
 
     retval = check_json_2_map_handle(p_ijson_2_map);
     if (JSON_2_MAP_SUCCESS != retval) {
@@ -125,6 +126,11 @@ static int32_t json_2_map_filepath_make_instance_impl(ijson_2_map_t* p_ijson_2_m
     char* file_path = (char*)opaque_data;
     ifile_handle_t* p_ifile_handle = NULL;
     p_ifile_handle = create_file_handle(file_path, FILE_OP_MODE_TXT_READ);
+    if (NULL == p_ifile_handle) {
+        log_error("%s, Allocate file handle fail!", __func__);
+        retval = JSON_2_MAP_MAKE_INSTANCE_FAIL;
+        goto EXIT;
+    }
 
     char base_name[PATH_LEN] = {'\0'};
     char extension_name[PATH_LEN] = {'\0'};
@@ -143,7 +149,6 @@ static int32_t json_2_map_filepath_make_instance_impl(ijson_2_map_t* p_ijson_2_m
     json_str_length = (json_str_length + 1);
 
     // Allocate string buffer and get json file in string from file handle.
-    unsigned char* json_file_in_string = NULL;
     json_file_in_string = (unsigned char*)calloc(json_str_length, sizeof(unsigned char));
     p_ifile_handle->get_buffer(p_ifile_handle, GET_BUFFER_CONTENTS_STRING,
                                (uint8_t*)json_file_in_string, (uint32_t*)&json_str_length);
@@ -158,7 +163,7 @@ static int32_t json_2_map_filepath_make_instance_impl(ijson_2_map_t* p_ijson_2_m
     json_parsing_save_map(context, g_json_root);
 
 EXIT:
-    retval = destroy_file_handle(p_ifile_handle);
+    destroy_file_handle(p_ifile_handle);
     if (NULL != json_file_in_string) {
         free(json_file_in_string);
         json_file_in_string = NULL;
@@ -377,15 +382,27 @@ static int32_t json_2_map_set_impl(ijson_2_map_t* p_ijson_2_map, const int32_t m
 }
 
 ijson_2_map_t* create_json2map_handle(void* context, json2map_create_mode_t mode) {
+    json_2_map_return_t retval = JSON_2_MAP_SUCCESS;
     ijson_2_map_t* p_ijson_2_map = (ijson_2_map_t*)calloc(1, sizeof(ijson_2_map_t));
     init_vector_storing();
 
     json_2_map_set_impl(p_ijson_2_map, mode);
-    p_ijson_2_map->init(p_ijson_2_map);
+    retval = p_ijson_2_map->init(p_ijson_2_map);
+    if (JSON_2_MAP_SUCCESS != retval) {
+        destroy_json2map_handle(p_ijson_2_map);
+        p_ijson_2_map = NULL;
+        goto EXIT;
+    }
 
     char* opaque_data = (char*)context;
-    p_ijson_2_map->make_instance(p_ijson_2_map, context, (uint32_t)strlen(opaque_data));
+    retval = p_ijson_2_map->make_instance(p_ijson_2_map, context, (uint32_t)strlen(opaque_data));
+    if (JSON_2_MAP_SUCCESS != retval) {
+        destroy_json2map_handle(p_ijson_2_map);
+        p_ijson_2_map = NULL;
+        goto EXIT;
+    }
 
+EXIT:
     return p_ijson_2_map;
 }
 
