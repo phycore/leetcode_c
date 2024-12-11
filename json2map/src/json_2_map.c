@@ -259,7 +259,7 @@ static int32_t json_2_map_get_string_impl(ijson_2_map_t* p_ijson_2_map, char* ke
     void* map_data = p_ijson_2_map->context;
     retval = map_data_get_str(map_data, key, get_str);
     if (MAP_DATA_SUCCESS == retval) {
-        log_debug("%s, key = %s, get_string = %s", __func__, key, *get_str);
+        log_debug("%s, key = %s, get_string = %s", __func__, key, get_str);
     } else if (MAP_DATA_NO_KEY == retval) {
         log_warn("%s, there is no key: %s", __func__, key);
     } else {
