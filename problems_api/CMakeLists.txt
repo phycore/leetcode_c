@@ -14,6 +14,10 @@ target_include_directories(problems_api
     ${PROB_API_DIR}/enc
 )
 
+if(MSVC)
+    add_definitions("-D_CRT_SECURE_NO_WARNINGS")
+endif()
+
 target_link_libraries(problems_api
     PUBLIC
         json_2_map
