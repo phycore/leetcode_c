@@ -44,6 +44,80 @@ static sort_fn g_sort_alg[] = {
     selection_sort
 };
 
+int32_t do_json_2_map_test(void* context, char** in_list, size_t in_list_len, char** out_list,
+                           size_t out_list_len) {
+    ijson_2_map_t* order = (ijson_2_map_t*)context;
+
+    char string_test[PATH_LEN] = {'\0'};
+
+    vec_str_t* string_array = NULL;
+    char string_array_element[PATH_LEN] = {'\0'};
+
+    vec_int_t* number_array = NULL;
+    vec_int_t* number_array_test = NULL;
+
+    vec_int_t* boolean_array = NULL;
+
+    int32_t boolean_true = -1;
+    int32_t boolean_false = -1;
+    BEGIN_OUTPUT();
+    for (size_t keys_idx = 0; keys_idx < in_list_len; keys_idx++) {
+        if (0 == strcmp(in_list[keys_idx], "string_test")) {
+            order->map_get_string(order, in_list[keys_idx], string_test);
+            log_info("%s, string_test: %s", __func__, string_test);
+        }
+
+        if (0 == strcmp(in_list[keys_idx], "string_array")) {
+            string_array = (vec_str_t*)order->map_get_vector_str(order, in_list[keys_idx]);
+            size_t vec_length = string_array->length;
+            for (size_t idx = 0; idx < vec_length; idx++) {
+                strncpy(string_array_element, string_array->data[idx],
+                        (strlen(string_array->data[idx]) + 1));
+                log_info("%s, string_array[%d]: %s", __func__, idx, string_array_element);
+                memset(string_array_element, '\0', PATH_LEN);
+            }
+        }
+
+        if (0 == strcmp(in_list[keys_idx], "number_array")) {
+            number_array = (vec_int_t*)order->map_get_vector_int(order, in_list[keys_idx]);
+            size_t vec_length = number_array->length;
+            for (size_t idx = 0; idx < vec_length; idx++) {
+                log_info("%s, number_array[%d]= %d", __func__, idx, number_array->data[idx]);
+            }
+        }
+
+        if (0 == strcmp(in_list[keys_idx], "number_array_test")) {
+            number_array_test = (vec_int_t*)order->map_get_vector_int(order, in_list[keys_idx]);
+            size_t vec_length = number_array_test->length;
+            for (size_t idx = 0; idx < vec_length; idx++) {
+                log_info("%s, number_array_test[%d]= %d", __func__, idx,
+                         number_array_test->data[idx]);
+            }
+        }
+
+        if (0 == strcmp(in_list[keys_idx], "boolean_array")) {
+            boolean_array = (vec_int_t*)order->map_get_vector_int(order, in_list[keys_idx]);
+            size_t vec_length = boolean_array->length;
+            for (size_t idx = 0; idx < vec_length; idx++) {
+                log_info("%s, boolean_array[%d]: %d", __func__, idx, boolean_array->data[idx]);
+            }
+        }
+
+        if (0 == strcmp(in_list[keys_idx], "true_test")) {
+            order->map_get_int(order, in_list[keys_idx], &boolean_true);
+            log_info("%s, boolean_ture: %d", __func__, boolean_true);
+        }
+
+        if (0 == strcmp(in_list[keys_idx], "false_test")) {
+            order->map_get_int(order, in_list[keys_idx], &boolean_false);
+            log_info("%s, boolean_false: %d", __func__, boolean_false);
+        }
+    }
+    END_OUTPUT();
+
+    return 0;
+}
+
 int32_t do_TwoSum(void* context, char** in_list, size_t in_list_len, char** out_list,
                   size_t out_list_len) {
     ijson_2_map_t* order = (ijson_2_map_t*)context;
