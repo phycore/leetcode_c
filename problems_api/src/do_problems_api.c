@@ -6,6 +6,7 @@
 #include "Linked_List.h"
 #include "json_2_map.h"
 #include "log.h"
+#include "plat_time.h"
 #include "sorting.h"
 #include "vec.h"
 
@@ -149,7 +150,10 @@ int32_t do_TwoSum(void* context, char** in_list, size_t in_list_len, char** out_
     END_INPUT();
 
     BEGIN_OUTPUT();
+    TIME_MEASURE_INIT(twoSum);
+    int64_t time_twosum = TIME_MEASURE_START(twoSum);
     int* index_array = twoSum(nums, numsSize, target, &returnSize);
+    TIME_MEASURE_STOP(twoSum, time_twosum);
     for (int idx = 0; idx < returnSize; idx++) {
         log_info("%s, Output: index_array[%d] = %d", __func__, idx, index_array[idx]);
     }
@@ -215,7 +219,10 @@ int32_t do_AddTwoNumbers(void* context, char** in_list, size_t in_list_len, char
     struct ListNode* l1 = p_list1->p_Head;
     struct ListNode* l2 = p_list2->p_Head;
     struct SinglyList* p_output_ans_list = NewList();
+    TIME_MEASURE_INIT(addTwoNumbers);
+    int64_t time_addTwoNumbers = TIME_MEASURE_START(addTwoNumbers);
     p_output_ans_list->p_Head = addTwoNumbers(l1, l2);
+    TIME_MEASURE_STOP(addTwoNumbers, time_addTwoNumbers);
     p_output_ans_list->length = GetListLength(p_output_ans_list);
 
     BEGIN_OUTPUT();
@@ -257,7 +264,10 @@ int32_t do_LongestSubstringWithoutRepeating(void* context, char** in_list, size_
     }
     END_INPUT();
 
+    TIME_MEASURE_INIT(lengthOfLongestSubstring);
+    int64_t time_lengthOfLongestSubstring = TIME_MEASURE_START(lengthOfLongestSubstring);
     size_t length_of_longest_substring = lengthOfLongestSubstring(s);
+    TIME_MEASURE_STOP(lengthOfLongestSubstring, time_lengthOfLongestSubstring);
 
     BEGIN_OUTPUT();
     log_info("%s, length of longest substring = %zu", __func__, length_of_longest_substring);
