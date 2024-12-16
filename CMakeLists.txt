@@ -74,3 +74,14 @@ else()
     add_subdirectory(sort)
     add_subdirectory(plat_utility)
 endif()
+
+# Unit Tests
+set(UNIT_TESTS 1)
+if(NOT DEFINED UNIT_TESTS)
+    set(UNIT_TESTS 0)
+endif()
+
+if(${UNIT_TESTS} EQUAL 1)
+    enable_testing()
+    add_subdirectory(tests)
+endif()
