@@ -18,6 +18,10 @@ Windows/Linux 可跨平台使用，Git clone 或下載此專案後，請使用 [
 # 除錯
 預設 debugger 使用 CMake: Debug and launch 設定可參考 [launch.json](https://github.com/phycore/leetcode_c/blob/main/.vscode/launch.json)，目前使用 MSVC 的 configurations，務必將執行的 JSON 檔案加入變數 "argus"，詳細的設定可參考微軟對 [CMake Tools](https://github.com/microsoft/vscode-cmake-tools/blob/main/docs/debug-launch.md) 使用說明。
 
+# 自動化編譯、測試與佈署
+使用 [Github Actions](https://docs.github.com/en/actions)，程式碼採跨平台 Windows/Linux 設計，兩作業系統皆可執行[結果](https://github.com/phycore/leetcode_c/actions)，跨平台與執行 leetcode 題目，利用 [matrix strategy](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/running-variations-of-jobs-in-a-workflow) 平行化處理。
+![workflow jobs](Actions.png)
+
 # 使用方式
 1. 將 LeetCode 題目儲存成 JSON 檔案
   - [Two Sum](https://leetcode.com/problems/two-sum/) 問題與範例解答<br>
