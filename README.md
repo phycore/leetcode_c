@@ -22,6 +22,29 @@ Windows/Linux 可跨平台使用，Git clone 或下載此專案後，請使用 [
 使用 [Github Actions](https://docs.github.com/en/actions)，程式碼採跨平台 Windows/Linux 設計，兩作業系統皆可執行[結果](https://github.com/phycore/leetcode_c/actions)，跨平台與執行 leetcode 題目，利用 [matrix strategy](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/running-variations-of-jobs-in-a-workflow) 平行化處理。
 ![workflow jobs](Actions.png)
 
+# 單元測試
+使用 [CMake: Ctest](https://cmake.org/cmake/help/book/mastering-cmake/chapter/Testing%20With%20CMake%20and%20CTest.html)，詳見 /tests/[CMakeLists.txt](https://github.com/phycore/leetcode_c/blob/main/tests/CMakeLists.txt) 並將單元測試整合在 Actions 的建置階段 [jobs-build-name: Unit Tests](https://github.com/phycore/leetcode_c/blob/main/.github/workflows/Actions.yml)，sleep time 單元測試執行結果如下
+```
+Run ctest -C Release
+Test project /home/runner/work/leetcode_c/leetcode_c/build
+    Start 1: timeout_test_0
+1/6 Test #1: timeout_test_0 ...................   Passed    0.00 sec
+    Start 2: timeout_test_1
+2/6 Test #2: timeout_test_1 ...................   Passed    1.00 sec
+    Start 3: timeout_test_2
+3/6 Test #3: timeout_test_2 ...................   Passed    2.00 sec
+    Start 4: timeout_test_3
+4/6 Test #4: timeout_test_3 ...................   Passed    3.00 sec
+    Start 5: timeout_test_4
+5/6 Test #5: timeout_test_4 ...................   Passed    4.00 sec
+    Start 6: timeout_test_5
+6/6 Test #6: timeout_test_5 ...................   Passed    5.00 sec
+
+100% tests passed, 0 tests failed out of 6
+
+Total Test time (real) =  15.05 sec
+```
+
 # 使用方式
 1. 將 LeetCode 題目儲存成 JSON 檔案
   - [Two Sum](https://leetcode.com/problems/two-sum/) 問題與範例解答<br>
