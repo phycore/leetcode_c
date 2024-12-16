@@ -14,6 +14,10 @@ Windows/Linux 可跨平台使用，Git clone 或下載此專案後，請使用 [
 ```
 ./main_leetcode -j TwoSum_case_1.json
 ```
+
+# 除錯
+預設 debugger 使用 CMake: Debug and launch 設定可參考 [launch.json](https://github.com/phycore/leetcode_c/blob/main/.vscode/launch.json)，目前使用 MSVC 的 configurations，務必將執行的 JSON 檔案加入變數 "argus"，詳細的設定可參考微軟對 [CMake Tools](https://github.com/microsoft/vscode-cmake-tools/blob/main/docs/debug-launch.md) 使用說明。
+
 # 使用方式
 1. 將 LeetCode 題目儲存成 JSON 檔案
   - [Two Sum](https://leetcode.com/problems/two-sum/) 問題與範例解答<br>
