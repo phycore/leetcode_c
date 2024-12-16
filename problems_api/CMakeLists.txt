@@ -26,4 +26,5 @@ target_link_libraries(problems_api
         linked_list
         sort
         logging
+        plat_utility
 )

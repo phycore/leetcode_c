@@ -22,6 +22,7 @@ target_link_libraries(main_leetcode
         json_2_map
         cmd_invoke
         logging
+        plat_utility
 )
 
 add_dependencies(main_leetcode json_2_map logging)
