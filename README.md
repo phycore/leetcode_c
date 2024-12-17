@@ -14,6 +14,37 @@ Windows/Linux 可跨平台使用，Git clone 或下載此專案後，請使用 [
 ```
 ./main_leetcode -j TwoSum_case_1.json
 ```
+
+# 除錯
+預設 debugger 使用 CMake: Debug and launch 設定可參考 [launch.json](https://github.com/phycore/leetcode_c/blob/main/.vscode/launch.json)，目前使用 MSVC 的 configurations，務必將執行的 JSON 檔案加入變數 "argus"，詳細的設定可參考微軟對 [CMake Tools](https://github.com/microsoft/vscode-cmake-tools/blob/main/docs/debug-launch.md) 使用說明。
+
+# 自動化編譯、測試與佈署
+使用 [Github Actions](https://docs.github.com/en/actions)，程式碼採跨平台 Windows/Linux 設計，兩作業系統皆可執行[結果](https://github.com/phycore/leetcode_c/actions)，跨平台與執行 leetcode 題目，利用 [matrix strategy](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/running-variations-of-jobs-in-a-workflow) 平行化處理。
+![workflow jobs](Actions.png)
+
+# 單元測試
+使用 [CMake: Ctest](https://cmake.org/cmake/help/book/mastering-cmake/chapter/Testing%20With%20CMake%20and%20CTest.html)，詳見 /tests/[CMakeLists.txt](https://github.com/phycore/leetcode_c/blob/main/tests/CMakeLists.txt) 並將單元測試整合在 Actions 的建置階段 [jobs-build-name: Unit Tests](https://github.com/phycore/leetcode_c/blob/main/.github/workflows/Actions.yml)，sleep time 單元測試執行結果如下
+```
+Run ctest -C Release
+Test project /home/runner/work/leetcode_c/leetcode_c/build
+    Start 1: timeout_test_0
+1/6 Test #1: timeout_test_0 ...................   Passed    0.00 sec
+    Start 2: timeout_test_1
+2/6 Test #2: timeout_test_1 ...................   Passed    1.00 sec
+    Start 3: timeout_test_2
+3/6 Test #3: timeout_test_2 ...................   Passed    2.00 sec
+    Start 4: timeout_test_3
+4/6 Test #4: timeout_test_3 ...................   Passed    3.00 sec
+    Start 5: timeout_test_4
+5/6 Test #5: timeout_test_4 ...................   Passed    4.00 sec
+    Start 6: timeout_test_5
+6/6 Test #6: timeout_test_5 ...................   Passed    5.00 sec
+
+100% tests passed, 0 tests failed out of 6
+
+Total Test time (real) =  15.05 sec
+```
+
 # 使用方式
 1. 將 LeetCode 題目儲存成 JSON 檔案
   - [Two Sum](https://leetcode.com/problems/two-sum/) 問題與範例解答<br>
@@ -113,10 +144,10 @@ Windows/Linux 可跨平台使用，Git clone 或下載此專案後，請使用 [
 ```
 
 # 待完成
-1. 將螢幕輸出的 log 儲存成文字檔案。
-1. LeetCode 問題解答，執行效能的軟體時間量測。
-1. LeetCode 問題解答，執行效能的記憶體使用量。
-1. LeetCode 問題解答，程式碼大小的 code size 計算。
+1. -[ ] 將螢幕輸出的 log 儲存成文字檔案。
+1. -[x] LeetCode 問題解答，執行效能的軟體時間量測。
+1. -[ ] LeetCode 問題解答，執行效能的記憶體使用量。
+1. -[ ] LeetCode 問題解答，程式碼大小的 code size 計算。
 
 # 使用開源專案
 1. C 語言解析 JSON: https://github.com/sheredom/json.h
