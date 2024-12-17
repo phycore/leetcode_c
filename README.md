@@ -144,10 +144,10 @@ Total Test time (real) =  15.05 sec
 ```
 
 # 待完成
-1. 將螢幕輸出的 log 儲存成文字檔案。
-1. LeetCode 問題解答，執行效能的軟體時間量測。
-1. LeetCode 問題解答，執行效能的記憶體使用量。
-1. LeetCode 問題解答，程式碼大小的 code size 計算。
+1. -[ ] 將螢幕輸出的 log 儲存成文字檔案。
+1. -[x] LeetCode 問題解答，執行效能的軟體時間量測。
+1. -[ ] LeetCode 問題解答，執行效能的記憶體使用量。
+1. -[ ] LeetCode 問題解答，程式碼大小的 code size 計算。
 
 # 使用開源專案
 1. C 語言解析 JSON: https://github.com/sheredom/json.h
