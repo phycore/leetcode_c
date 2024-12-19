@@ -19,7 +19,7 @@ foreach(SECS RANGE 0 5 1)
         NAME timeout_test_${SECS}
         COMMAND main_time -t "${SECS}"
     )
-    MATH(EXPR TIMEOUT_SECS "${SECS} + 1")
+    MATH(EXPR TIMEOUT_SECS "1")
     message(STATUS "check timeout ${TIMEOUT_SECS} seconds.")
     set_tests_properties(timeout_test_${SECS} PROPERTIES TIMEOUT ${TIMEOUT_SECS})
 endforeach()
