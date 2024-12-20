@@ -40,6 +40,7 @@ int* twoSum(int* nums, int numsSize, int target, int* returnSize) {
     return target_indexes;
 }
 
+#if 0
 int lengthOfLongestSubstring(char* s) {
     int max_length = (int)strlen(s);
     if (max_length <= 1) {
@@ -87,3 +88,4 @@ int lengthOfLongestSubstring(char* s) {
 
     return max_length;
 }
+#endif

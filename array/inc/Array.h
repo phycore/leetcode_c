@@ -6,5 +6,7 @@
  */
 int* twoSum(int* nums, int numsSize, int target, int* returnSize);
 
+#if 0
 int lengthOfLongestSubstring(char* s);
+#endif
 #endif  // _ARRAY_H
