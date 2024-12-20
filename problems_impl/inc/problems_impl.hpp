@@ -6,8 +6,12 @@
 using namespace std;
 
 class p3_Solution {
+   private:
+    string sub_string;
+
    public:
     int lengthOfLongestSubstring(string s);
+    void show_longest_substring(void);
 };
 #else
 typedef struct p3_Solution p3_Solution;

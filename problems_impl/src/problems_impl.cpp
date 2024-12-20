@@ -4,8 +4,11 @@ extern "C" {
 #include "log.h"
 }
 
+void p3_Solution::show_longest_substring(void) {
+    log_info("%s, string: %s", __func__, this->sub_string.c_str());
+}
+
 int p3_Solution::lengthOfLongestSubstring(string s) {
-    string sub_string;
     string temp_string;
     size_t length = 0;
     size_t max_length = 0;
@@ -26,12 +29,13 @@ int p3_Solution::lengthOfLongestSubstring(string s) {
 
         if (length > max_length) {
             max_length = length;
-            sub_string = temp_string;
+            this->sub_string = temp_string;
         }
-        log_debug("%s, sub_string: %s", __func__, sub_string.c_str());
+
         log_debug("%s, longest length: %d", __func__, max_length);
     }
 
+    this->show_longest_substring();
     return (int)max_length;
 }
 
