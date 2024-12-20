@@ -59,13 +59,6 @@ int main(int argc, char* argv[]) {
     destroy_json2map_handle(ijson_2_map);
 EXIT:
 
-#ifdef _DEBUG_VERSION
-    TIME_MEASURE_INIT(sleep_1000ms_test);
-    int64_t time_1000ms = TIME_MEASURE_START(sleep_1000ms_test);
-    plat_sleep_time(1000);
-    TIME_MEASURE_STOP(sleep_1000ms_test, time_1000ms);
-#endif
-
 #ifdef _CRTDBG_MAP_ALLOC
     log_debug("%s, --Begin Memory Leak Detection--", __func__);
     _CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
