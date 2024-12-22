@@ -1,7 +1,12 @@
 list( APPEND
     PROBLEMS_IMPL_LIB_OBJS
     src/problems_cimpl.c
+    src/problems_wrapper.c
+    src/problems_cxximpl.cpp
 )
+
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 11)
 
 add_library(prob_impl STATIC ${PROBLEMS_IMPL_LIB_OBJS})
 
