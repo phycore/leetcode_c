@@ -81,7 +81,7 @@ int read_file_to_string(FILE* fp, unsigned char* file_in_string, size_t* file_in
     int idx = 0;
     size_t examine_length = *file_in_string_length;
     while ((ch = fgetc(fp)) != EOF) {
-        if ((isspace((unsigned char)ch)) || ((unsigned char)ch == '\n')) {
+        if ((unsigned char)ch == '\n') {
             continue;
         }
         *(file_in_string + idx) = (unsigned char)ch;
