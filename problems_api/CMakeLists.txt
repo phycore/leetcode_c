@@ -27,4 +27,5 @@ target_link_libraries(problems_api
         sort
         logging
         plat_utility
+        prob_impl
 )
