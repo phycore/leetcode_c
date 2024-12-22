@@ -7,6 +7,7 @@
 #include "json_2_map.h"
 #include "log.h"
 #include "plat_time.h"
+#include "problems_cimpl.h"
 #include "sorting.h"
 #include "vec.h"
 
