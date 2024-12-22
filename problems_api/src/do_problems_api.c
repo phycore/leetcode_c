@@ -7,6 +7,8 @@
 #include "json_2_map.h"
 #include "log.h"
 #include "plat_time.h"
+#include "problems_cimpl.h"
+#include "problems_wrapper.h"
 #include "sorting.h"
 #include "vec.h"
 
@@ -266,7 +268,7 @@ int32_t do_LongestSubstringWithoutRepeating(void* context, char** in_list, size_
 
     TIME_MEASURE_INIT(lengthOfLongestSubstring);
     int64_t time_lengthOfLongestSubstring = TIME_MEASURE_START(lengthOfLongestSubstring);
-    size_t length_of_longest_substring = lengthOfLongestSubstring(s);
+    size_t length_of_longest_substring = lengthOfLongestSubstring_ex(s);
     TIME_MEASURE_STOP(lengthOfLongestSubstring, time_lengthOfLongestSubstring);
 
     BEGIN_OUTPUT();
