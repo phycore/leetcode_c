@@ -16,6 +16,10 @@ class p3_Solution {
 };
 
 class p48_Solution {
+   private:
+    // vector<vector<int>> temp_matrix;
+    void column_vector_to_matrix(vector<vector<int>>& dest_matrix, vector<vector<int>>& clm_vector);
+
    public:
     void rotate(vector<vector<int>>& matrix);
 };
