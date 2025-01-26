@@ -47,3 +47,11 @@ int run_p3_solution(p3_Solution* p_self, char* s) {
     string input_string(s);
     return p_self->lengthOfLongestSubstring(input_string);
 }
+
+void p48_Solution::rotate(vector<vector<int>>& matrix) {}
+
+void* create_p48_solution(void) { return new p48_Solution; }
+
+void delete_p48_solution(p48_Solution* p_self) { delete p_self; }
+
+void run_p48_solution(p48_Solution* p_self, int** matrix, int matrixSize, int* matrixColSize) {}
