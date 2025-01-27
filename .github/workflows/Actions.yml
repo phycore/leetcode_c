@@ -90,7 +90,8 @@ jobs:
         matrix:
             problem: [TwoSum,
                       AddTwoNumbers,
-                      LongestSubstring]
+                      LongestSubstring,
+                      RotateImage]
 
     steps:
     - name: windows-test-download
@@ -121,7 +122,8 @@ jobs:
       matrix:
           problem: [TwoSum,
                     AddTwoNumbers,
-                    LongestSubstring]
+                    LongestSubstring,
+                    RotateImage]
 
     steps:
     - name: linux-test-download
