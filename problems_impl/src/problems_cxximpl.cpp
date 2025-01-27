@@ -48,17 +48,17 @@ int run_p3_solution(p3_Solution* p_self, char* s) {
     return p_self->lengthOfLongestSubstring(input_string);
 }
 
-void p48_Solution::column_vector_to_matrix(vector<vector<int>>& dest_matrix,
-                                           vector<vector<int>>& clm_vector) {
+void p48_Solution::vector_to_rotate_matrix(vector<vector<int>>& dest_matrix,
+                                           vector<int>& ans_vector) {
     size_t rows = dest_matrix.size();
     size_t clms = dest_matrix[0].size();
-    size_t rows_of_clm_vector = clm_vector.size();
+    size_t ans_size = ans_vector.size();
 
-    size_t clm_vec_index = 0;
-    if (rows_of_clm_vector == (rows * clms)) {
-        for (size_t clm_index = 0; clm_index < clms; clm_index++) {
-            for (size_t row_index = 0; row_index < rows; row_index++) {
-                dest_matrix[row_index][clm_index] = clm_vector[clm_vec_index++][0];
+    size_t ans_index = 0;
+    if ((rows * clms) == ans_size) {
+        for (int clm_index = (clms - 1); clm_index >= 0; clm_index--) {
+            for (int row_index = 0; row_index < rows; row_index++) {
+                dest_matrix[row_index][clm_index] = ans_vector[ans_index++];
             }
         }
     }
@@ -72,23 +72,16 @@ void p48_Solution::rotate(vector<vector<int>>& matrix) {
     size_t rows = matrix.size();
     size_t clms = matrix[0].size();
 
-    // this->temp_matrix.clear();
-    // this->temp_matrix.resize(rows, vector<int>(clms));
-    vector<vector<int>> ans_clm_vec;
-    for (int row_index = (rows - 1); row_index >= 0; row_index--) {
-        // row vector
-        vector<int> row_vec(matrix[row_index]);
-        // column vector
-        clms = matrix[row_index].size();
-        vector<vector<int>> clm_vec(clms, vector<int>(1));
+    // read matrix elements to 1d vector.
+    vector<int> ans_vec;
+    for (size_t row_index = 0; row_index < rows; row_index++) {
         for (size_t clm_index = 0; clm_index < clms; clm_index++) {
-            clm_vec[clm_index][0] = row_vec[clm_index];
+            ans_vec.insert(ans_vec.end(), matrix[row_index][clm_index]);
         }
-        ans_clm_vec.insert(ans_clm_vec.end(), clm_vec.begin(), clm_vec.end());
     }
 
-    // rewrite input matrix.
-    this->column_vector_to_matrix(matrix, ans_clm_vec);
+    // do rotate matrix.
+    this->vector_to_rotate_matrix(matrix, ans_vec);
 }
 
 void* create_p48_solution(void) { return new p48_Solution; }
