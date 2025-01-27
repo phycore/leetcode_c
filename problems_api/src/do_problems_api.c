@@ -357,6 +357,32 @@ int32_t do_rotateImage(void* context, char** in_list, size_t in_list_len, char**
     return 0;
 }
 
+int32_t do_lengthOfLastWord(void* context, char** in_list, size_t in_list_len, char** out_list,
+                            size_t out_list_len) {
+    ijson_2_map_t* order = (ijson_2_map_t*)context;
+
+    char get_string[PATH_LEN] = {'\0'};
+    BEGIN_INPUT();
+    for (size_t keys_idx = 0; keys_idx < in_list_len; keys_idx++) {
+        if (0 == strcmp(in_list[keys_idx], "s")) {
+            order->map_get_string(order, in_list[keys_idx], get_string);
+            log_info("%s, s: %s", __func__, get_string);
+        }
+    }
+    END_INPUT();
+
+    TIME_MEASURE_INIT(lengthOfLastWord);
+    int64_t time_lengthOfLastWord = TIME_MEASURE_START(lengthOfLastWord);
+    int length = lengthOfLastWord(get_string);
+    TIME_MEASURE_STOP(lengthOfLastWord, time_lengthOfLastWord);
+
+    BEGIN_OUTPUT();
+    log_info("%s, length = %d", __func__, length);
+    END_OUTPUT();
+
+    return 0;
+}
+
 int32_t do_sort(void* context, char** in_list, size_t in_list_len, char** out_list,
                 size_t out_list_len) {
     ijson_2_map_t* order = (ijson_2_map_t*)context;

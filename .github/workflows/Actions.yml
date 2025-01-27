@@ -91,7 +91,8 @@ jobs:
             problem: [TwoSum,
                       AddTwoNumbers,
                       LongestSubstring,
-                      RotateImage]
+                      RotateImage,
+                      LengthOfLastWord]
 
     steps:
     - name: windows-test-download
@@ -123,7 +124,8 @@ jobs:
           problem: [TwoSum,
                     AddTwoNumbers,
                     LongestSubstring,
-                    RotateImage]
+                    RotateImage,
+                    LengthOfLastWord]
 
     steps:
     - name: linux-test-download
