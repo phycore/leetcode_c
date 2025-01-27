@@ -1,6 +1,7 @@
 list( APPEND
     PLAT_UTILITY_LIB_OBJS
     src/plat_time_${OS_SYSTEM}.c
+    src/plat_memory_${OS_SYSTEM}.c
 )
 
 add_library(plat_utility STATIC ${PLAT_UTILITY_LIB_OBJS})
