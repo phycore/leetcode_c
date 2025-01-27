@@ -1,5 +1,6 @@
 #include "problems_cimpl.h"
 
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -61,4 +62,23 @@ int lengthOfLongestSubstring(char* s) {
     }
 
     return max_length;
+}
+
+int lengthOfLastWord(char* s) {
+    log_debug("%s, s: %s, length of s = %d", __func__, s, strlen(s));
+
+    int last_word_length = 0;
+    char* p_cur_ch = (s + (strlen(s) - 1));
+    while (p_cur_ch >= s) {
+        if (isspace(*p_cur_ch)) {
+            if (last_word_length > 0) {
+                break;
+            }
+        } else {
+            last_word_length++;
+        }
+        p_cur_ch--;
+    }
+
+    return last_word_length;
 }
