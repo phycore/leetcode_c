@@ -9,3 +9,9 @@ int lengthOfLongestSubstring_ex(char* s) {
 
     return length;
 }
+
+void rotateImage_ex(int** matrix, int matrixSize, int* matrixColSize) {
+    p48_Solution* p_solution = create_p48_solution();
+    run_p48_solution(p_solution, matrix, matrixSize, matrixColSize);
+    delete_p48_solution(p_solution);
+}

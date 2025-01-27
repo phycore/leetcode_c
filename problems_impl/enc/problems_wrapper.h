@@ -6,6 +6,7 @@ extern "C" {
 #endif
 
 int lengthOfLongestSubstring_ex(char* s);
+void rotateImage_ex(int** matrix, int matrixSize, int* matrixColSize);
 
 #ifdef __cplusplus
 }  // extern "C"

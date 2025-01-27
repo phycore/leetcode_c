@@ -6,6 +6,7 @@
 #include "Linked_List.h"
 #include "json_2_map.h"
 #include "log.h"
+#include "plat_memory.h"
 #include "plat_time.h"
 #include "problems_cimpl.h"
 #include "problems_wrapper.h"
@@ -274,6 +275,84 @@ int32_t do_LongestSubstringWithoutRepeating(void* context, char** in_list, size_
     BEGIN_OUTPUT();
     log_info("%s, length of longest substring = %zu", __func__, length_of_longest_substring);
     END_OUTPUT();
+
+    return 0;
+}
+
+int32_t do_rotateImage(void* context, char** in_list, size_t in_list_len, char** out_list,
+                       size_t out_list_len) {
+    ijson_2_map_t* order = (ijson_2_map_t*)context;
+
+    int32_t rows = 0;
+    int32_t clms = 0;
+    vec_int_t* matrix_store_in_vec = NULL;
+
+    BEGIN_INPUT();
+    for (size_t keys_idx = 0; keys_idx < in_list_len; keys_idx++) {
+        if (0 == strcmp(in_list[keys_idx], "rows")) {
+            order->map_get_int(order, in_list[keys_idx], &rows);
+            log_info("%s, rows = %d", __func__, rows);
+        }
+
+        if (0 == strcmp(in_list[keys_idx], "clms")) {
+            order->map_get_int(order, in_list[keys_idx], &clms);
+            log_info("%s, clms = %d", __func__, clms);
+        }
+    }
+
+    /*memory of matrix allocate*/
+    size_t row_size = (rows * sizeof(int*));
+    int** matrix = (int**)plat_allocate(row_size);
+
+    size_t clm_size = (clms * sizeof(int));
+    matrix[0] = (int*)plat_allocate(clms * clm_size);
+    for (size_t index = 0; index < rows; index++) {
+        matrix[index] = matrix[0] + (index * clms);
+    }
+
+    for (size_t keys_idx = 0; keys_idx < in_list_len; keys_idx++) {
+        if (0 == strcmp(in_list[keys_idx], "matrix")) {
+            matrix_store_in_vec = order->map_get_vector_int(order, in_list[keys_idx]);
+            if ((rows * clms) == matrix_store_in_vec->length) {
+                size_t idx = 0;
+                for (size_t row_idx = 0; row_idx < rows; row_idx++) {
+                    for (size_t clm_idx = 0; clm_idx < clms; clm_idx++) {
+                        *(matrix[row_idx] + clm_idx) = matrix_store_in_vec->data[idx++];
+                    }
+                }
+            }
+        }
+    }
+
+    for (size_t row_idx = 0; row_idx < rows; row_idx++) {
+        for (size_t clm_idx = 0; clm_idx < clms; clm_idx++) {
+            log_info("%s, before rotate matrix[%zu][%zu] = %d", __func__, row_idx, clm_idx,
+                     *(matrix[row_idx] + clm_idx));
+        }
+    }
+
+    END_INPUT();
+
+    int matrixSize = (rows * clms);
+    int matrixColSize = clms;
+
+    TIME_MEASURE_INIT(rotateImage);
+    int64_t time_rotateImage = TIME_MEASURE_START(rotateImage);
+    rotateImage_ex(matrix, matrixSize, &matrixColSize);
+    TIME_MEASURE_STOP(rotateImage, time_rotateImage);
+
+    BEGIN_OUTPUT();
+    for (size_t row_idx = 0; row_idx < rows; row_idx++) {
+        for (size_t clm_idx = 0; clm_idx < clms; clm_idx++) {
+            log_info("%s, after rotate matrix[%zu][%zu] = %d", __func__, row_idx, clm_idx,
+                     *(matrix[row_idx] + clm_idx));
+        }
+    }
+    END_OUTPUT();
+
+    // free memory of matrix
+    PLAT_FREE(matrix[0]);
+    PLAT_FREE(matrix);
 
     return 0;
 }

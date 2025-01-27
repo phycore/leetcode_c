@@ -3,6 +3,7 @@
 
 #ifdef __cplusplus
 #include <string>
+#include <vector>
 using namespace std;
 
 class p3_Solution {
@@ -13,8 +14,18 @@ class p3_Solution {
     int lengthOfLongestSubstring(string s);
     void show_longest_substring(void);
 };
+
+class p48_Solution {
+   private:
+    // vector<vector<int>> temp_matrix;
+    void column_vector_to_matrix(vector<vector<int>>& dest_matrix, vector<vector<int>>& clm_vector);
+
+   public:
+    void rotate(vector<vector<int>>& matrix);
+};
 #else
 typedef struct p3_Solution p3_Solution;
+typedef struct p48_Solution p48_Solution;
 #endif  // __cplusplus
 
 #ifdef __cplusplus
@@ -31,6 +42,9 @@ extern "C" {
 
 DECLARE_SOLUTION(p3);
 int run_p3_solution(p3_Solution* p_self, char* s);
+
+DECLARE_SOLUTION(p48);
+void run_p48_solution(p48_Solution* p_self, int** matrix, int matrixSize, int* matrixColSize);
 
 #ifdef __cplusplus
 }  // extern "C"
