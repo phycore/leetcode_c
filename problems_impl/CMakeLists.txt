@@ -1,5 +1,6 @@
 list( APPEND
     PROBLEMS_IMPL_LIB_OBJS
+    src/BasicCalculator.c
     src/problems_cimpl.c
     src/problems_wrapper.c
     src/problems_cxximpl.cpp
