@@ -10,7 +10,7 @@
 #include "map_data.h"
 #include "vector_storing_helper.h"
 
-#define PATH_LEN 260
+#define PATH_LEN 0xFFFFUL
 #define FREE(ptr)          \
     do {                   \
         if (NULL != ptr) { \

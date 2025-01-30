@@ -31,7 +31,7 @@
             "request": "launch",
             // Resolved by CMake Tools:
             "program": "${command:cmake.launchTargetPath}",
-            "args": ["-j", "${workspaceFolder}/problems/AddTwoNumbers_case_1.json"],
+            "args": ["-j", "${workspaceFolder}/problems/BasicCalculator_case_11.json"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [

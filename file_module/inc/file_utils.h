@@ -15,7 +15,7 @@ typedef enum {
 #define PATH_LEN MAX_PATH
 #else
 #define PATH_SEP '/'
-#define PATH_LEN PATH_MAX
+#define PATH_LEN 0xFFFFUL
 #endif
 
 size_t get_file_size(FILE* fp);

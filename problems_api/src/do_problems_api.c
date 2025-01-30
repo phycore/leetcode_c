@@ -387,7 +387,7 @@ int32_t do_lengthOfLastWord(void* context, char** in_list, size_t in_list_len, c
 int32_t do_calculate(void* context, char** in_list, size_t in_list_len, char** out_list,
                      size_t out_list_len) {
     ijson_2_map_t* order = (ijson_2_map_t*)context;
-    char get_string[PATH_LEN] = {'\0'};
+    char get_string[0xFFFF] = {'\0'};
     BEGIN_INPUT();
     for (size_t keys_idx = 0; keys_idx < in_list_len; keys_idx++) {
         if (0 == strcmp(in_list[keys_idx], "s")) {
@@ -397,7 +397,10 @@ int32_t do_calculate(void* context, char** in_list, size_t in_list_len, char** o
     }
     END_INPUT();
 
+    TIME_MEASURE_INIT(calculate);
+    int64_t time_calculate = TIME_MEASURE_START(calculate);
     int ans = calculate(get_string);
+    TIME_MEASURE_STOP(calculate, time_calculate);
 
     BEGIN_OUTPUT();
     log_info("%s, ans = %d", __func__, ans);

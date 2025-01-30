@@ -5,7 +5,7 @@
 
 // TODO: storing multi dimentional vector. ex: [ [1, 2, 3], [4, 5, 6]]
 
-#define MAX_SIZE_VEC (uint32_t)256
+#define MAX_SIZE_VEC (uint32_t)0xFFFF
 
 typedef enum {
     VEC_TYPE_STR = 1,
