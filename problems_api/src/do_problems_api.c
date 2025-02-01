@@ -4,6 +4,7 @@
 
 #include "Array.h"
 #include "Linked_List.h"
+#include "LongestCommonPrefix.h"
 #include "json_2_map.h"
 #include "log.h"
 #include "plat_memory.h"
@@ -269,6 +270,60 @@ int32_t do_LongestSubstringWithoutRepeating(void* context, char** in_list, size_
     log_info("%s, length of longest substring = %zu", __func__, length_of_longest_substring);
     END_OUTPUT();
 
+    return 0;
+}
+
+int32_t do_LongestCommonPrefix(void* context, char** in_list, size_t in_list_len, char** out_list,
+                               size_t out_list_len) {
+    ijson_2_map_t* order = (ijson_2_map_t*)context;
+    vec_str_t* strs_array = NULL;
+    char ans[PATH_LEN] = {'\0'};
+    int strsSize = 0;
+    size_t nums_of_list = 256;
+    size_t list_length = (nums_of_list * sizeof(char*));
+    char** strs = (char**)plat_allocate(list_length);
+
+    size_t str_length = (PATH_LEN * sizeof(char));
+    strs[0] = (char*)plat_allocate(nums_of_list * str_length);
+    for (size_t idx = 0; idx < nums_of_list; idx++) {
+        strs[idx] = strs[0] + (idx * PATH_LEN);
+    }
+
+    BEGIN_INPUT();
+    for (size_t keys_idx = 0; keys_idx < in_list_len; keys_idx++) {
+        if (0 == strcmp(in_list[keys_idx], "ans")) {
+            order->map_get_string(order, in_list[keys_idx], ans);
+            log_info("%s, ans: %s", __func__, ans);
+        }
+
+        if (0 == strcmp(in_list[keys_idx], "strs")) {
+            strs_array = (vec_str_t*)order->map_get_vector_str(order, in_list[keys_idx]);
+            int index = 0;
+            char* str = NULL;
+            vec_foreach(strs_array, str, index) {
+                log_info("%s, strs_array[%d] = %s", __func__, index, str);
+            }
+
+            strsSize = strs_array->length;
+            for (int idx = 0; idx < strsSize; idx++) {
+                strncpy(strs[idx], strs_array->data[idx], (strlen(strs_array->data[idx]) + 1));
+                log_info("%s, strs[%d] = %s", __func__, idx, strs[idx]);
+            }
+        }
+    }
+    END_INPUT();
+
+    BEGIN_OUTPUT();
+    TIME_MEASURE_INIT(longestCommonPrefix);
+    int64_t time_longestCommonPrefix = TIME_MEASURE_START(longestCommonPrefix);
+    char* common_prefix = longestCommonPrefix(strs, strsSize);
+    TIME_MEASURE_STOP(longestCommonPrefix, time_longestCommonPrefix);
+    log_info("%s, common_prefix: %s", __func__, common_prefix);
+    END_OUTPUT();
+
+    PLAT_FREE(common_prefix);
+    PLAT_FREE(strs[0]);
+    PLAT_FREE(strs);
     return 0;
 }
 
