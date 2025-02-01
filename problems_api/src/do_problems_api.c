@@ -298,7 +298,7 @@ int32_t do_rotateImage(void* context, char** in_list, size_t in_list_len, char**
     int** matrix = (int**)plat_allocate(row_size);
 
     size_t clm_size = (clms * sizeof(int));
-    matrix[0] = (int*)plat_allocate(clms * clm_size);
+    matrix[0] = (int*)plat_allocate(rows * clm_size);
     for (size_t index = 0; index < rows; index++) {
         matrix[index] = matrix[0] + (index * clms);
     }
