@@ -18,7 +18,7 @@ jobs:
             os: [ubuntu-latest, windows-latest]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
@@ -53,7 +53,7 @@ jobs:
 
     - name: windows-test-upload
       if: runner.os == 'Windows'
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: win-leetcode-artifacts
         path: ${{github.workspace}}\testing\Windows
@@ -77,7 +77,7 @@ jobs:
 
     - name: linux-test-upload
       if: runner.os == 'Linux'
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: linux-leetcode-artifacts
         path: ${{github.workspace}}/testing/Linux
@@ -96,7 +96,7 @@ jobs:
 
     steps:
     - name: windows-test-download
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: win-leetcode-artifacts
         path: ${{github.workspace}}/testing/Windows
@@ -129,7 +129,7 @@ jobs:
 
     steps:
     - name: linux-test-download
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: linux-leetcode-artifacts
         path: ${{github.workspace}}/testing/Linux
