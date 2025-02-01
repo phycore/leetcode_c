@@ -91,6 +91,7 @@ jobs:
             problem: [TwoSum,
                       AddTwoNumbers,
                       LongestSubstring,
+                      LongestCommonPrefix,
                       RotateImage,
                       LengthOfLastWord]
 
@@ -124,6 +125,7 @@ jobs:
           problem: [TwoSum,
                     AddTwoNumbers,
                     LongestSubstring,
+                    LongestCommonPrefix,
                     RotateImage,
                     LengthOfLastWord]
 
