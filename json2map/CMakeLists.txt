@@ -21,6 +21,7 @@ target_include_directories(json_2_map
 target_link_libraries(json_2_map
     PUBLIC
         logging
+        plat_utility
         file_module
         map
         vector
