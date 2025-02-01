@@ -56,7 +56,7 @@ void p48_Solution::vector_to_rotate_matrix(vector<vector<int>>& dest_matrix,
 
     size_t ans_index = 0;
     if ((rows * clms) == ans_size) {
-        for (int clm_index = (clms - 1); clm_index >= 0; clm_index--) {
+        for (int clm_index = (int)(clms - 1); clm_index >= 0; clm_index--) {
             for (int row_index = 0; row_index < rows; row_index++) {
                 dest_matrix[row_index][clm_index] = ans_vector[ans_index++];
             }

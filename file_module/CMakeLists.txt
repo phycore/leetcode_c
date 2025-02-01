@@ -19,6 +19,7 @@ target_include_directories(file_module
 target_link_libraries(file_module
     PUBLIC
         logging
+        plat_utility
 )
 
 if(MSVC)

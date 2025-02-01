@@ -7,19 +7,12 @@
 #include "json_2_map.h"
 #include "log.h"
 #include "plat_memory.h"
+#include "plat_string.h"
 #include "plat_time.h"
 #include "problems_cimpl.h"
 #include "problems_wrapper.h"
 #include "sorting.h"
 #include "vec.h"
-
-#if defined (_WIN32)
-#include <windows.h>
-#define PATH_LEN MAX_PATH
-#elif defined (__linux__)
-#include <limits.h>
-#define PATH_LEN PATH_MAX
-#endif
 
 #define SORT_ALG_OFFSET 4000  // It's ALG_BASE in commands.h
 
@@ -305,7 +298,7 @@ int32_t do_rotateImage(void* context, char** in_list, size_t in_list_len, char**
     int** matrix = (int**)plat_allocate(row_size);
 
     size_t clm_size = (clms * sizeof(int));
-    matrix[0] = (int*)plat_allocate(clms * clm_size);
+    matrix[0] = (int*)plat_allocate(rows * clm_size);
     for (size_t index = 0; index < rows; index++) {
         matrix[index] = matrix[0] + (index * clms);
     }

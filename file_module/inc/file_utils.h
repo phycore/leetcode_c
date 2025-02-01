@@ -3,20 +3,14 @@
 
 #include <stdio.h>
 
+#include "plat_string.h"
+
 typedef enum {
     FILE_UTILITY_SUCCESS = 0,
     FILE_UTILITY_FILE_STREAM_INVALID = 1,
     FILE_UTILITY_PARAMS_INCOREECT = 2,
     FILE_UTILITY_OUT_BUFFER_SIZE_INSUFFICIENT = 3
 } file_utility_return_t;
-
-#ifdef _WIN32
-#define PATH_SEP '\\'
-#define PATH_LEN MAX_PATH
-#else
-#define PATH_SEP '/'
-#define PATH_LEN PATH_MAX
-#endif
 
 size_t get_file_size(FILE* fp);
 char* get_file_base_name(const char* file_path);
