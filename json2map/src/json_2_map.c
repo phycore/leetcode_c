@@ -8,9 +8,9 @@
 #include "json_parsing_helper.h"
 #include "log.h"
 #include "map_data.h"
+#include "plat_string.h"
 #include "vector_storing_helper.h"
 
-#define PATH_LEN 260
 #define FREE(ptr)          \
     do {                   \
         if (NULL != ptr) { \
