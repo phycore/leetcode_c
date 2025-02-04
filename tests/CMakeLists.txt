@@ -24,3 +24,23 @@ foreach(SECS RANGE 0 5 1)
     set_tests_properties(timeout_test_${SECS} PROPERTIES TIMEOUT ${TIMEOUT_SECS})
 endforeach()
 ### Sleep Time Unit Tests ###
+
+### Compress Unit Tests ###
+add_executable(main_compress
+    ${CMAKE_CURRENT_SOURCE_DIR}/compress/main.c
+)
+
+target_link_libraries(main_compress
+    PUBLIC
+        compress
+)
+
+add_test(
+    NAME compress_test
+    COMMAND main_compress
+)
+
+set_tests_properties(
+    compress_test
+    PROPERTIES FAIL_REGULAR_EXPRESSION "[^a-z]Error;ERROR;Failed"
+)
