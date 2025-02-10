@@ -14,6 +14,7 @@ DECLARE_API(do_json_2_map_test);
 DECLARE_API(do_TwoSum);
 DECLARE_API(do_AddTwoNumbers);
 DECLARE_API(do_LongestSubstringWithoutRepeating);
+DECLARE_API(do_ContainerWithMostWater);
 DECLARE_API(do_LongestCommonPrefix);
 DECLARE_API(do_rotateImage);
 DECLARE_API(do_lengthOfLastWord);

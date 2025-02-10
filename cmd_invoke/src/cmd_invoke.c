@@ -65,6 +65,12 @@ int32_t command_handler(uint32_t cmd_id, input_data_t* in_data, output_data_t* o
             break;
         }
 
+        case CMD_LEETCODE_CONTAINER_WITH_MOST_WATER: {
+            retval = do_ContainerWithMostWater(order, input_list, input_list_len, output_list,
+                                               output_list_len);
+            break;
+        }
+
         case CMD_LEETCODE_LONGEST_COMMON_PREFIX: {
             retval = do_LongestCommonPrefix(order, input_list, input_list_len, output_list,
                                             output_list_len);

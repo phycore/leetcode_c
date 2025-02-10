@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "Array.h"
+#include "ContainerWithMostWater.h"
 #include "Linked_List.h"
 #include "LongestCommonPrefix.h"
 #include "json_2_map.h"
@@ -270,6 +271,32 @@ int32_t do_LongestSubstringWithoutRepeating(void* context, char** in_list, size_
     log_info("%s, length of longest substring = %zu", __func__, length_of_longest_substring);
     END_OUTPUT();
 
+    return 0;
+}
+
+int32_t do_ContainerWithMostWater(void* context, char** in_list, size_t in_list_len,
+                                  char** out_list, size_t out_list_len) {
+    ijson_2_map_t* order = (ijson_2_map_t*)context;
+    vec_int_t* height_vec = NULL;
+    int heightSize = 0;
+    for (size_t keys_idx = 0; keys_idx < in_list_len; keys_idx++) {
+        if (0 == strcmp(in_list[keys_idx], "height")) {
+            height_vec = (vec_int_t*)order->map_get_vector_int(order, in_list[keys_idx]);
+            heightSize = (int)height_vec->length;
+        }
+    }
+
+    int* height = plat_allocate(sizeof(int) * heightSize);
+    BEGIN_INPUT();
+    for (size_t idx = 0; idx < heightSize; idx++) {
+        height[idx] = height_vec->data[idx];
+        log_info("%s, height[%d] = %d", __func__, idx, height[idx]);
+    }
+    END_INPUT();
+
+    int max_area = maxArea(height, heightSize);
+
+    PLAT_FREE(height);
     return 0;
 }
 

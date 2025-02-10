@@ -2,6 +2,7 @@ list( APPEND
     PROBLEMS_IMPL_LIB_OBJS
     src/problems_cimpl.c
     src/LongestCommonPrefix.c
+    src/ContainerWithMostWater.c
     src/problems_wrapper.c
     src/problems_cxximpl.cpp
 )
