@@ -5,6 +5,7 @@
 #include "Array.h"
 #include "Linked_List.h"
 #include "LongestCommonPrefix.h"
+#include "SearchInsertPosition.h"
 #include "json_2_map.h"
 #include "log.h"
 #include "plat_memory.h"
@@ -324,6 +325,46 @@ int32_t do_LongestCommonPrefix(void* context, char** in_list, size_t in_list_len
     PLAT_FREE(common_prefix);
     PLAT_FREE(strs[0]);
     PLAT_FREE(strs);
+    return 0;
+}
+
+int32_t do_searchInsert(void* context, char** in_list, size_t in_list_len, char** out_list,
+                        size_t out_list_len) {
+    ijson_2_map_t* order = (ijson_2_map_t*)context;
+
+    int32_t target = 0;
+    vec_int_t* nums_vec = NULL;
+    int numsSize = 0;
+    for (size_t keys_idx = 0; keys_idx < in_list_len; keys_idx++) {
+        if (0 == strcmp(in_list[keys_idx], "target")) {
+            order->map_get_int(order, in_list[keys_idx], &target);
+        }
+
+        if (0 == strcmp(in_list[keys_idx], "nums")) {
+            nums_vec = (vec_int_t*)order->map_get_vector_int(order, in_list[keys_idx]);
+            numsSize = nums_vec->length;
+        }
+    }
+
+    BEGIN_INPUT();
+    int* nums = plat_allocate(numsSize * sizeof(int));
+    for (size_t idx = 0; idx < numsSize; idx++) {
+        nums[idx] = nums_vec->data[idx];
+        log_info("%s, nums[%d] = %d", __func__, idx, nums[idx]);
+    }
+    log_info("%s, target = %d", __func__, target);
+    END_INPUT();
+
+    TIME_MEASURE_INIT(searchInsert);
+    int64_t time_searchInsert = TIME_MEASURE_START(searchInsert);
+    int insert = searchInsert(nums, numsSize, target);
+    TIME_MEASURE_STOP(searchInsert, time_searchInsert);
+
+    BEGIN_OUTPUT();
+    log_info("%s insert = %d", __func__, insert);
+    END_OUTPUT();
+
+    PLAT_FREE(nums);
     return 0;
 }
 

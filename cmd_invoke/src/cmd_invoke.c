@@ -71,6 +71,12 @@ int32_t command_handler(uint32_t cmd_id, input_data_t* in_data, output_data_t* o
             break;
         }
 
+        case CMD_LEETCODE_SEARCH_INSERT_POSITION: {
+            retval =
+                do_searchInsert(order, input_list, input_list_len, output_list, output_list_len);
+            break;
+        }
+
         case CMD_LEETCODE_ROTATE_IMAGE: {
             retval =
                 do_rotateImage(order, input_list, input_list_len, output_list, output_list_len);
