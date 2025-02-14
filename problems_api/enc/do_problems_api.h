@@ -18,6 +18,7 @@ DECLARE_API(do_LongestCommonPrefix);
 DECLARE_API(do_searchInsert);
 DECLARE_API(do_rotateImage);
 DECLARE_API(do_lengthOfLastWord);
+DECLARE_API(do_minSubArrayLen);
 DECLARE_API(do_sort);
 
 #endif  // _DO_PROB_API

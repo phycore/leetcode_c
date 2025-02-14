@@ -94,7 +94,8 @@ jobs:
                       LongestCommonPrefix,
                       SearchInsertPosition,
                       RotateImage,
-                      LengthOfLastWord]
+                      LengthOfLastWord,
+                      MinimumSizeSubarraySum]
 
     steps:
     - name: windows-test-download
@@ -129,7 +130,8 @@ jobs:
                     LongestCommonPrefix,
                     SearchInsertPosition,
                     RotateImage,
-                    LengthOfLastWord]
+                    LengthOfLastWord,
+                    MinimumSizeSubarraySum]
 
     steps:
     - name: linux-test-download

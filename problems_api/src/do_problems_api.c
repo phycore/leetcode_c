@@ -5,6 +5,7 @@
 #include "Array.h"
 #include "Linked_List.h"
 #include "LongestCommonPrefix.h"
+#include "MinimumSizeSubarraySum.h"
 #include "SearchInsertPosition.h"
 #include "json_2_map.h"
 #include "log.h"
@@ -469,6 +470,46 @@ int32_t do_lengthOfLastWord(void* context, char** in_list, size_t in_list_len, c
     log_info("%s, length = %d", __func__, length);
     END_OUTPUT();
 
+    return 0;
+}
+
+int32_t do_minSubArrayLen(void* context, char** in_list, size_t in_list_len, char** out_list,
+                          size_t out_list_len) {
+    ijson_2_map_t* order = (ijson_2_map_t*)context;
+
+    int32_t target = 0;
+    vec_int_t* nums_vec = NULL;
+    int numsSize = 0;
+    for (size_t keys_idx = 0; keys_idx < in_list_len; keys_idx++) {
+        if (0 == strcmp(in_list[keys_idx], "target")) {
+            order->map_get_int(order, in_list[keys_idx], &target);
+        }
+
+        if (0 == strcmp(in_list[keys_idx], "nums")) {
+            nums_vec = (vec_int_t*)order->map_get_vector_int(order, in_list[keys_idx]);
+            numsSize = nums_vec->length;
+        }
+    }
+
+    BEGIN_INPUT();
+    int* nums = plat_allocate(numsSize * sizeof(int));
+    for (size_t idx = 0; idx < numsSize; idx++) {
+        nums[idx] = nums_vec->data[idx];
+        log_info("%s, nums[%d] = %d", __func__, idx, nums[idx]);
+    }
+    log_info("%s, target = %d", __func__, target);
+    END_INPUT();
+
+    TIME_MEASURE_INIT(minSubArrayLen);
+    int64_t time_min_len = TIME_MEASURE_START(minSubArrayLen);
+    int min_len = minSubArrayLen(target, nums, numsSize);
+    TIME_MEASURE_STOP(minSubArrayLen, time_min_len);
+
+    BEGIN_OUTPUT();
+    log_info("%s, min len = %d", __func__, min_len);
+    END_OUTPUT();
+
+    PLAT_FREE(nums);
     return 0;
 }
 
